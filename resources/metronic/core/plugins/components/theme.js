@@ -28,6 +28,17 @@ export default plugin(({addBase, theme}) => {
 		return vars;
 	}
 
+	const getAgiColors = (mode) => {
+		const agi = theme('base.colors.agi')[mode];
+		const vars = {};
+
+		for (const variant of Object.keys(agi)) {
+			vars[`--tw-agi-${variant}`] = agi[variant];
+		}
+
+		return vars;
+	}
+
 	const getDefaultGrayColors = (mode) => {
 		const gray = theme('base.colors.gray')[mode];
 		const vars = {};
@@ -127,6 +138,7 @@ export default plugin(({addBase, theme}) => {
 	addBase({
     ':root, .light': {
 			...getGrayColors('light'),
+			...getAgiColors('light'),
 			...getContextualColors('light'),
 			...getContextualBoxShadows('light'),
 			...getComponentBackgroundColors('light'),
@@ -138,6 +150,7 @@ export default plugin(({addBase, theme}) => {
 	addBase({
     '.dark': {
 			...getGrayColors('dark'),
+			...getAgiColors('dark'),
 			...getContextualColors('dark'),
 			...getContextualBoxShadows('dark'),
 			...getComponentBackgroundColors('dark'),
