@@ -7,12 +7,12 @@
     "require": {
         "php": "^8.3",
         "barryvdh/laravel-dompdf": "^3.0",
-        "daengdeni/authentication-module": "dev-master",
-        "daengdeni/basicdata-module": "dev-master",
+        "daengdeni/authentication-module": "^1.0",
+        "daengdeni/basicdata-module": "^1.0",
         "daengdeni/laravel-id-generator": "^1.0",
         "daengdeni/log-reader": "^2.4",
         "daengdeni/logs-module": "^1.0",
-        "daengdeni/usermanagement-module": "dev-master",
+        "daengdeni/usermanagement-module": "^1.0",
         "diglactic/laravel-breadcrumbs": "^10.0",
         "joshbrw/laravel-module-installer": "^2.0",
         "laravel/framework": "^12.0",
@@ -119,9 +119,9 @@
             "url": "https://git.putrakuningan.com/daengdeni/basicdata"
         },
         {
-            "name": "daengdeni/log-reader",
+            "name": "daengdeni/basicdata-module",
             "type": "vcs",
-            "url": "https://github.com/daengdeni/Laravel-Log-Reader.git"
+            "url": "https://git.putrakuningan.com/daengdeni/basicdata"
         }
     ]
 }
