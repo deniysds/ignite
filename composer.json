@@ -10,7 +10,7 @@
         "daengdeni/logs-module": "^1.0",
         "daengdeni/location-module": "^1.0",
         "daengdeni/usermanagement-module": "^1.0",
-        "daengdeni/authenticationdule": "^1.0",
+        "daengdeni/authentication-module": "^1.0",
         "joshbrw/laravel-module-installer": "^2.0",
         "laravel/framework": "^12.0",
         "laravel/tinker": "^2.10.1",
