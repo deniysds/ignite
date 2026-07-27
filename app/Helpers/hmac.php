@@ -1,7 +1,5 @@
 <?php
     use Illuminate\Support\Facades\Log;
-    use Modules\Usermanagement\Models\User;
-    use Modules\Whitelist\Models\Service;
 
     if (!function_exists('generateHmac512')) {
         /**
