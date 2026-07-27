@@ -1,69 +1,43 @@
 @php
     use Nwidart\Modules\Module;
+    use Illuminate\Support\Facades\Route;
+
+    $route      = explode('.',Route::currentRouteName());
+	$modules    = file_get_contents(dirname(__FILE__, 4) . '/modules_statuses.json');
+    $module     = json_decode($modules);
 @endphp
-<!doctype html>
-<html class="h-full" data-theme="true" data-theme-mode="light" lang="en">
 
-<head>
-    <meta charset="utf-8">
-    <title>{{ env('APP_NAME') }}</title>
-    <base href="/">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="stylesheet" href="{{ asset('vendor/dropzone/dropzone.min.css') }}" type="text/css" />
+<!DOCTYPE html>
+<html class="h-full" data-kt-theme="true" data-kt-theme-mode="light" dir="ltr" lang="en">
+    <head>
+        @include('layouts.partials.head')
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+    </head>
+    <body class="flex h-full text-base antialiased metronic kt-sidebar-fixed kt-header-fixed bg-background text-foreground">
+        @include('partials.theme-toggle')
 
-    @vite(Module::getAssets())
-    @stack('styles')
-</head>
+        <!-- Page -->
+        <!-- Main -->
+        <div class="flex grow">
+            @include('layouts.base.sidebar')
 
-<body style="zoom:80%!important" class="flex h-full metronic sidebar-fixed header-fixed bg-[#fefefe] dark:bg-coal-500">
+            <!-- Wrapper -->
+            <div class="flex flex-col kt-wrapper grow">
+                @include('layouts.base.header')
 
-    @if (session('error'))
-        <em class="hidden toastr" data-type="error" data-message=" {{ session('error') }}"></em>
-    @endif
+                <!-- Content -->
+                <main class="pt-5 grow" id="content" role="content">
+                    @yield('content')
+                </main>
+                <!-- End of Content -->
 
-    @if (session('info'))
-        <em class="hidden toastr" data-type="info" data-message=" {{ session('info') }}"></em>
-    @endif
+                @include('layouts.base.footer')
+            </div>
+            <!-- End of Wrapper -->
+        </div>
+        <!-- End of Main -->
+        <!-- End of Page -->
 
-    @if (session('warning'))
-        <em class="hidden toastr" data-type="warning" data-message=" {{ session('warning') }}"></em>
-    @endif
-
-    @if (session('success'))
-        <em class="hidden toastr" data-type="success" data-message=" {{ session('success') }}"></em>
-    @endif
-
-
-    <!--begin::Theme mode setup on page load-->
-    <script>
-        const defaultThemeMode = 'system'; // light|dark|system
-        let themeMode;
-
-        if (document.documentElement) {
-            if (localStorage.getItem('theme')) {
-                themeMode = localStorage.getItem('theme');
-            } else if (document.documentElement.hasAttribute('data-theme-mode')) {
-                themeMode = document.documentElement.getAttribute('data-theme-mode');
-            } else {
-                themeMode = defaultThemeMode;
-            }
-
-            if (themeMode === 'system') {
-                themeMode = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-            }
-
-            document.documentElement.classList.add(themeMode);
-        }
-    </script>
-    <!--end::Theme mode setup on page load-->
-    <script src="{{ asset('vendor/filerobot-image-editor/filerobot-image-editor.min.js') }}"></script>
-    <script src="{{ asset('vendor/dropzone/dropzone.min.js') }}"></script>
-
-    @yield('main')
-    @stack('scripts')
-
-
-</body>
-
+        @include('layouts.partials.scripts')
+    </body>
 </html>

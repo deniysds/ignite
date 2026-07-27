@@ -1,119 +1,243 @@
-import "./bootstrap";
-import "../metronic/core/index";
-import "../metronic/app/layouts/base.js";
-import $ from "jquery";
-import Swal from "sweetalert2";
-import TomSelect from "tom-select";
-import toast from "toastr";
-import "toastr/build/toastr.css";
-import IMask from "imask";
-// import FilerobotImageEditor from "filerobot-image-editor";
+import './bootstrap.js';
 
-window.jQuery = $;
-window.$ = $;
-
-window.Swal = Swal;
-window.swal = Swal;
-
-window.IMask = IMask;
-// window.FilerobotImageEditor = FilerobotImageEditor;
-window.TomSelect = TomSelect;
-
-document.querySelectorAll(".tomselect").forEach((el) => {
-    let settings = {
-        plugins: ["dropdown_input", "remove_button", "clear_button"],
-        create: false,
-        createOnBlur: true,
-        closeButton: true,
-        html: function (data) {
-            return `<div class="${data.className}" title="${data.title}">&times;</div>`;
-        },
-    };
-
-    new TomSelect(el, settings);
+const INDONESIAN_LOCALE = 'id-ID';
+const DATE_OPTIONS = {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+};
+const DATE_TIME_OPTIONS = {
+    ...DATE_OPTIONS,
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false,
+};
+const RUPIAH_FORMATTER = new Intl.NumberFormat(INDONESIAN_LOCALE, {
+    style: 'currency',
+    currency: 'IDR',
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
 });
 
-window.toast = toast;
+/**
+ * Mengembalikan true saat kode berjalan di browser.
+ */
+function hasBrowserRuntime() {
+    return typeof window !== 'undefined' && typeof document !== 'undefined';
+}
 
-document.querySelectorAll(".toastr").forEach((el) => {
-    toast.options = {
-        closeButton: true,
-        timeOut: 5000,
-        showMethod: "slideDown",
-        closeMethod: "slideUp",
-        preventDuplication: true,
-        newestOnTop: true,
-        closeDuration: 300,
-    };
-    toast[el.dataset.type](el.dataset.message);
-});
+/**
+ * Memformat tanggal ke tampilan Indonesia.
+ */
+export function formatTanggalIndonesia(date) {
+    return new Date(date).toLocaleDateString(INDONESIAN_LOCALE, DATE_OPTIONS);
+}
 
-// Fungsi untuk memformat tanggal ke format Indonesia
-window.formatTanggalIndonesia = function (date) {
-    const options = {
-        weekday: "long",
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-    };
-    return new Date(date).toLocaleDateString("id-ID", options);
-};
+/**
+ * Memformat tanggal dan waktu ke tampilan Indonesia.
+ */
+export function formatTanggalWaktuIndonesia(date) {
+    return new Date(date).toLocaleString(INDONESIAN_LOCALE, DATE_TIME_OPTIONS);
+}
 
-// Fungsi untuk memformat tanggal dan waktu ke format Indonesia
-window.formatTanggalWaktuIndonesia = function (date) {
-    const options = {
-        weekday: "long",
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-        hour12: false,
-    };
-    return new Date(date).toLocaleString("id-ID", options);
-};
+/**
+ * Memformat angka menjadi mata uang Rupiah.
+ */
+export function formatRupiah(angka) {
+    return RUPIAH_FORMATTER.format(angka);
+}
 
-// Fungsi untuk memformat angka ke format Rupiah
-window.formatRupiah = function (angka) {
-    const formatter = new Intl.NumberFormat("id-ID", {
-        style: "currency",
-        currency: "IDR",
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-    });
-    return formatter.format(angka);
-};
-
-document.querySelectorAll(".currency").forEach((el) => {
-    IMask(el, {
-        mask: Number, // enable number mask
-
-        // other options are optional with defaults below
-        scale: 2, // digits after point, 0 for integers
-        thousandsSeparator: ".", // any single char
-        padFractionalZeros: false, // if true, then pads zeros at end to the length of scale
-        normalizeZeros: true, // appends or removes zeros at ends
-        radix: ",", // fractional delimiter
-        mapToRadix: ["."], // symbols to process as radix
-
+/**
+ * Membuat opsi dasar IMask untuk input numerik agar tidak duplikatif.
+ */
+export function createNumberMaskOptions(overrides = {}) {
+    return {
+        mask: Number,
+        scale: 2,
+        thousandsSeparator: '.',
+        padFractionalZeros: false,
+        normalizeZeros: true,
+        radix: ',',
+        mapToRadix: ['.'],
         autofix: true,
-    });
-});
+        ...overrides,
+    };
+}
 
-document.querySelectorAll(".persen").forEach((el) => {
-    IMask(el, {
-        mask: Number, // enable number mask
-        min: 0,
-        max: 100,
-        // other options are optional with defaults below
-        scale: 2, // digits after point, 0 for integers
-        thousandsSeparator: ".", // any single char
-        padFractionalZeros: false, // if true, then pads zeros at end to the length of scale
-        normalizeZeros: true, // appends or removes zeros at ends
-        radix: ",", // fractional delimiter
-        mapToRadix: ["."], // symbols to process as radix
+/**
+ * Menerapkan IMask ke seluruh elemen yang cocok dengan selector tertentu.
+ */
+export function applyMaskToSelector(selector, options, root = document) {
+    if (!root?.querySelectorAll || typeof globalThis.IMask !== 'function') {
+        return [];
+    }
 
-        autofix: true,
+    return Array.from(root.querySelectorAll(selector)).map((element) => globalThis.IMask(element, options));
+}
+
+/**
+ * Menginisialisasi seluruh input mask numerik yang digunakan aplikasi.
+ */
+export function initInputMasks(root = document) {
+    return {
+        currency: applyMaskToSelector('.currency', createNumberMaskOptions(), root),
+        persen: applyMaskToSelector('.persen', createNumberMaskOptions({ min: 0, max: 100 }), root),
+    };
+}
+
+/**
+ * Menginisialisasi perilaku drawer Metronic sederhana berbasis toggle class.
+ */
+export function initDrawers(root = document) {
+    const drawers = root.querySelectorAll('[data-kt-drawer]');
+
+    drawers.forEach((drawer) => {
+        const toggles = root.querySelectorAll(`[data-kt-drawer-toggle="#${drawer.id}"]`);
+
+        toggles.forEach((toggle) => {
+            toggle.addEventListener('click', (event) => {
+                event.preventDefault();
+                drawer.classList.toggle('hidden');
+                drawer.classList.toggle('block');
+            });
+        });
     });
-});
+}
+
+/**
+ * Menginisialisasi dropdown menu Metronic sederhana.
+ */
+export function initMenus(root = document) {
+    const menus = root.querySelectorAll('[data-kt-menu="true"]');
+
+    menus.forEach((menu) => {
+        const items = menu.querySelectorAll('[data-kt-menu-item-toggle="dropdown"]');
+
+        items.forEach((item) => {
+            const trigger = item.querySelector('[data-kt-menu-item-trigger="click"], [data-kt-menu-item-trigger="click|lg:hover"]');
+            const dropdown = item.querySelector('.kt-menu-dropdown');
+
+            if (trigger && dropdown) {
+                trigger.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    dropdown.classList.toggle('hidden');
+                });
+            }
+        });
+    });
+}
+
+/**
+ * Menginisialisasi elemen sticky berdasarkan offset scroll.
+ */
+export function initStickyHeaders(root = document, targetWindow = window) {
+    const stickyElements = root.querySelectorAll('[data-kt-sticky="true"]');
+
+    stickyElements.forEach((element) => {
+        const stickyClass = element.getAttribute('data-kt-sticky-class') || 'kt-sticky';
+        const offset = parseInt(element.getAttribute('data-kt-sticky-offset'), 10) || 0;
+
+        targetWindow.addEventListener('scroll', () => {
+            if (targetWindow.scrollY > offset) {
+                element.classList.add(...stickyClass.split(' '));
+                return;
+            }
+
+            element.classList.remove(...stickyClass.split(' '));
+        });
+    });
+}
+
+/**
+ * Menginisialisasi toggle modal berbasis selector target.
+ */
+export function initModals(root = document) {
+    const modalToggles = root.querySelectorAll('[data-kt-modal-toggle]');
+
+    modalToggles.forEach((toggle) => {
+        toggle.addEventListener('click', function onModalToggle(event) {
+            event.preventDefault();
+
+            const modalId = this.getAttribute('data-kt-modal-toggle');
+            const modal = root.querySelector(modalId);
+
+            if (modal) {
+                modal.classList.toggle('hidden');
+                modal.classList.toggle('flex');
+            }
+        });
+    });
+}
+
+/**
+ * Menutup modal ketika backdrop modal diklik.
+ */
+export function closeModalsOnBackdropClick(event, root = document) {
+    const modals = root.querySelectorAll('.kt-modal');
+
+    modals.forEach((modal) => {
+        if (event.target === modal) {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+    });
+}
+
+/**
+ * Menjalankan seluruh inisialisasi JavaScript utama aplikasi.
+ */
+export function initApplication(root = document, targetWindow = window) {
+    initDrawers(root);
+    initMenus(root);
+    initStickyHeaders(root, targetWindow);
+    initModals(root);
+    initInputMasks(root);
+}
+
+/**
+ * Mendaftarkan utilitas global ke window untuk kompatibilitas kode existing.
+ */
+export function registerGlobalHelpers(targetWindow = window) {
+    targetWindow.formatTanggalIndonesia = formatTanggalIndonesia;
+    targetWindow.formatTanggalWaktuIndonesia = formatTanggalWaktuIndonesia;
+    targetWindow.formatRupiah = formatRupiah;
+    targetWindow.MetronicCore = {
+        initDrawers,
+        initMenus,
+        initStickyHeaders,
+        initModals,
+        initInputMasks,
+        formatTanggalIndonesia,
+        formatTanggalWaktuIndonesia,
+        formatRupiah,
+        createNumberMaskOptions,
+        applyMaskToSelector,
+        closeModalsOnBackdropClick,
+        initApplication,
+    };
+}
+
+/**
+ * Menjalankan Alpine secara dinamis agar file tetap aman diimpor dari test Node.
+ */
+async function startAlpine() {
+    const { default: Alpine } = await import('alpinejs');
+
+    window.Alpine = Alpine;
+    Alpine.start();
+}
+
+if (hasBrowserRuntime()) {
+    registerGlobalHelpers(window);
+    void startAlpine();
+
+    document.addEventListener('DOMContentLoaded', () => {
+        initApplication(document, window);
+    });
+
+    document.addEventListener('click', (event) => {
+        closeModalsOnBackdropClick(event, document);
+    });
+}

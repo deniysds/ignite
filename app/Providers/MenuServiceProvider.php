@@ -21,6 +21,10 @@
             $moduleDirs = File::directories($modulesPath);
 
             foreach ($moduleDirs as $moduleDir) {
+                if(!is_module_active(basename($moduleDir)))
+                {
+                    continue;
+                }
                 $moduleJsonPath = $moduleDir . '/module.json';
                 if (File::exists($moduleJsonPath)) {
                     $moduleConfig = json_decode(File::get($moduleJsonPath), true);

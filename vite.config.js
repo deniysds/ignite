@@ -1,40 +1,21 @@
-import {defineConfig} from 'vite';
+import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
-import collectModuleAssetsPaths from './vite-module-loader.js';
-import inject from "@rollup/plugin-inject";
-
-const allPaths = [
-    'resources/css/app.scss',
-    'resources/js/app.js',
-];
-
-const paths = await collectModuleAssetsPaths(allPaths,'Modules');
+import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
-    build: {
-        sourcemap: true,
-        rollupOptions: {
-            output: {
-                chunkFileNames: 'js/[name].js',
-                entryFileNames: 'js/[name].js',
-            },
-        }
-    },
     plugins: [
-        inject({   // => that should be first under plugins array
-            $: 'jquery',
-            jQuery: 'jquery',
-        }),
+        tailwindcss(),
         laravel({
-            input: paths,
-            refresh: true
+            input: ['resources/css/app.css', 'resources/js/app.js'],
+            refresh: true,
         }),
     ],
-    css: {
-    preprocessorOptions: {
-      scss: {
-        api: 'modern-compiler' // or "modern"
-      }
+    build: {
+        rollupOptions: {
+            external: [
+                // Exclude Metronic assets from Vite bundling
+                /^\/assets\/.*/
+            ]
+        }
     }
-  }
 });

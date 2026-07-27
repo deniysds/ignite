@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #35c1d0;
+  --color-primary-foreground: #ffffff;
+
+  --color-agi-50: #effcfc;
+  --color-agi-100: #d5f6f8;
+  --color-agi-200: #b1ecf0;
+  --color-agi-300: #7bdde5;
+  --color-agi-400: #35c1d0;
+  --color-agi-500: #22a7b8;
+  --color-agi-600: #1f879b;
+  --color-agi-700: #206d7e;
+  --color-agi-800: #225968;
+  --color-agi-900: #214b58;
+  --color-agi-950: #10313c;
+
+  --color-agi-dark-50: #10313c;
+  --color-agi-dark-100: #214b58;
+  --color-agi-dark-200: #225968;
+  --color-agi-dark-300: #206d7e;
+  --color-agi-dark-400: #1f879b;
+  --color-agi-dark-500: #22a7b8;
+  --color-agi-dark-600: #35c1d0;
+  --color-agi-dark-700: #7bdde5;
+  --color-agi-dark-800: #b1ecf0;
+  --color-agi-dark-900: #d5f6f8;
+  --color-agi-dark-950: #effcfc;
+
+  --color-brand-red: #ff5722;
+}
+
+:root {
+  --primary: var(--color-primary);
+  --primary-foreground: var(--color-primary-foreground);
+}
+
+.agi {
+  --color-primary: var(--color-agi-400);
+  --color-primary-foreground: #ffffff;
+  --primary: var(--color-primary);
+  --primary-foreground: var(--color-primary-foreground);
+}
+
+.dark {
+  --color-primary: var(--color-agi-dark-400);
+  --color-primary-foreground: var(--color-agi-dark-950);
+  --primary: var(--color-primary);
+  --primary-foreground: var(--color-primary-foreground);
+}
+
+.dark .agi,
+.agi.dark {
+  --color-primary: var(--color-agi-dark-400);
+  --color-primary-foreground: var(--color-agi-dark-950);
+  --primary: var(--color-primary);
+  --primary-foreground: var(--color-primary-foreground);
+}

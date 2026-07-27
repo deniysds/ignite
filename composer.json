@@ -1,55 +1,41 @@
 {
+    "$schema": "https://getcomposer.org/schema.json",
     "name": "laravel/laravel",
     "type": "project",
     "description": "The skeleton application for the Laravel framework.",
     "keywords": ["laravel", "framework"],
     "license": "MIT",
     "require": {
-        "php": "^8.3",
-        "barryvdh/laravel-dompdf": "^3.0",
-        "daengdeni/authentication-module": "^1.0",
-        "daengdeni/basicdata-module": "^1.0",
-        "daengdeni/laravel-id-generator": "^1.0",
-        "daengdeni/log-reader": "^2.4",
+        "php": "^8.2",
         "daengdeni/logs-module": "^1.0",
+        "daengdeni/location-module": "^1.0",
         "daengdeni/usermanagement-module": "^1.0",
-        "diglactic/laravel-breadcrumbs": "^10.0",
+        "daengdeni/authenticationdule": "^1.0",
         "joshbrw/laravel-module-installer": "^2.0",
         "laravel/framework": "^12.0",
-        "league/flysystem-sftp-v3": "^3.0",
-        "maatwebsite/excel": "^3.1",
-        "nwidart/laravel-modules": "^12",
-        "opcodesio/log-viewer": "^3.10",
-        "owenoj/pdf-password-protect": "^0.9.0",
-        "spatie/laravel-activitylog": "^4.8",
-        "spatie/laravel-pdf": "^1.5",
-        "spatie/laravel-permission": "^6.9",
-        "tecnickcom/tcpdf": "^6.10",
-        "webklex/laravel-pdfmerger": "^1.3",
-        "wildside/userstamps": "^3.0"
+        "laravel/tinker": "^2.10.1",
+        "nwidart/laravel-modules": "^13.0",
+        "spatie/laravel-activitylog": "^4.12",
+        "spatie/laravel-permission": "^8.3"
     },
     "require-dev": {
-        "deployer/deployer": "^7.4",
         "fakerphp/faker": "^1.23",
-        "laravel/boost": "^1.0",
+        "laravel/pail": "^1.2.2",
         "laravel/pint": "^1.13",
-        "laravel/pulse": "^1.2",
-        "laravel/sail": "^1.26",
-        "laravel/telescope": "^5.7",
-        "laravel/tinker": "^2.9",
+        "laravel/sail": "^1.41",
         "mockery/mockery": "^1.6",
-        "nunomaduro/collision": "^8.0",
-        "phpunit/phpunit": "^12"
+        "nunomaduro/collision": "^8.6",
+        "phpunit/phpunit": "^11.5.3"
     },
     "autoload": {
+        "files": [
+            "app/Helpers/helpers.php"
+        ],
         "psr-4": {
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        },
-        "files": [
-            "app/Helpers/helpers.php"
-        ]
+        }
     },
     "autoload-dev": {
         "psr-4": {
@@ -71,6 +57,14 @@
             "@php artisan key:generate --ansi",
             "@php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\"",
             "@php artisan migrate --graceful --ansi"
+        ],
+        "dev": [
+            "Composer\\Config::disableProcessTimeout",
+            "npx concurrently -c \"#93c5fd,#c4b5fd,#fb7185,#fdba74\" \"php artisan serve\" \"php artisan queue:listen --tries=1\" \"php artisan pail --timeout=0\" \"npm run dev\" --names=server,queue,logs,vite"
+        ],
+        "test": [
+            "@php artisan config:clear --ansi",
+            "@php artisan test"
         ]
     },
     "extra": {
@@ -89,10 +83,10 @@
         "preferred-install": "dist",
         "sort-packages": true,
         "allow-plugins": {
+            "joshbrw/laravel-module-installer": true,
             "pestphp/pest-plugin": true,
             "php-http/discovery": true,
-            "wikimedia/composer-merge-plugin": true,
-            "joshbrw/laravel-module-installer": true
+            "wikimedia/composer-merge-plugin": true
         }
     },
     "minimum-stability": "stable",
@@ -114,14 +108,9 @@
             "url": "https://git.putrakuningan.com/daengdeni/authentication"
         },
         {
-            "name": "daengdeni/basicdata-module",
+            "name": "daengdeni/location-module",
             "type": "vcs",
-            "url": "https://git.putrakuningan.com/daengdeni/basicdata"
-        },
-        {
-            "name": "daengdeni/basicdata-module",
-            "type": "vcs",
-            "url": "https://git.putrakuningan.com/daengdeni/basicdata"
+            "url": "https://git.putrakuningan.com/daengdeni/location"
         }
     ]
 }
