@@ -1,7 +1,7 @@
 <!-- Footer -->
 <footer class="kt-footer">
     <!-- Container -->
-    <div class="kt-container-fixed">
+    <div class="kt-container-fluid">
         <div class="flex flex-col gap-3 justify-center items-center py-5 md:flex-row md:justify-between">
             <div class="flex order-2 gap-2 text-sm font-normal md:order-1">
                 <span class="text-secondary-foreground">
@@ -15,8 +15,7 @@
                 <a class="hover:text-primary" href="">
                     Docs
                 </a>
-                <a class="hover:text-primary"
-                    href="">
+                <a class="hover:text-primary" href="">
                     FAQ
                 </a>
                 <a class="hover:text-primary" href="">

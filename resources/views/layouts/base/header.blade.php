@@ -2,7 +2,7 @@
 <header class="flex fixed top-0 z-10 items-stretch kt-header end-0 start-0 shrink-0 bg-background" data-kt-sticky="true"
     data-kt-sticky-class="border-b border-border" data-kt-sticky-name="header" id="header">
     <!-- Container -->
-    <div class="flex justify-between items-stretch kt-container-fixed lg:gap-4" id="headerContainer">
+    <div class="flex justify-between items-stretch kt-container-fluid lg:gap-4" id="headerContainer">
         <!-- Mobile Logo -->
         <div class="flex gap-2.5 items-center -ms-1 lg:hidden">
             <a class="shrink-0" href="#">

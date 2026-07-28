@@ -185,7 +185,7 @@
                     name="check" type="checkbox" value="1" />
             </div>
             <a class="justify-center w-full kt-btn kt-btn-outline"
-                href="#">
+                href="{{ route('logout') }}">
                 Log out
             </a>
         </div>

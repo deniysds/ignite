@@ -1,24 +1,49 @@
 @unless ($breadcrumbs->isEmpty())
-    <div class="flex [.header_&amp;]:below-lg:hidden items-center gap-1.25 text-xs lg:text-sm font-medium mb-2.5 lg:mb-0" data-reparent="true" data-reparent-mode="prepend|lg:prepend" data-reparent-target="#content_container|lg:#header_container">
+    <ol class="kt-breadcrumb">
+        <li class="kt-breadcrumb-item">
+            <a href="{{ url('/') }}" class="kt-breadcrumb-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="lucide lucide-house" aria-hidden="true">
+                    <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path>
+                    <path
+                        d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z">
+                    </path>
+                </svg>
+            </a>
+        </li>
+        <li class="kt-breadcrumb-separator">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="lucide lucide-chevron-right" aria-hidden="true">
+                <path d="m9 18 6-6-6-6"></path>
+            </svg>
+        </li>
         @foreach ($breadcrumbs as $breadcrumb)
-            @if (!$loop->last)
-                @if(!is_null($breadcrumb->url))
-                    <span class="text-gray-600">
-                        <a href="{{ $breadcrumb->url }}">{{ $breadcrumb->title }}</a>
-                    </span>
-                @else
-                    <span class="text-gray-700">
-                        {{ $breadcrumb->title }}
-                    </span>
-                @endif
-                <i class="ki-filled ki-right text-gray-500 text-3xs">
-                </i>
-            @else
-                <span class="text-gray-700">
-                    {{ $breadcrumb->title }}
-                </span>
+            @if ($loop->first && ($breadcrumb->url === url('/') || strtolower($breadcrumb->title) === 'home'))
+                @continue
             @endif
 
+            @if (!$loop->last)
+                <li class="kt-breadcrumb-item">
+                    @if ($breadcrumb->url)
+                        <a href="{{ $breadcrumb->url }}" class="kt-breadcrumb-link">{{ $breadcrumb->title }}</a>
+                    @else
+                        <span class="kt-breadcrumb-link">{{ $breadcrumb->title }}</span>
+                    @endif
+                </li>
+                <li class="kt-breadcrumb-separator">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-chevron-right" aria-hidden="true">
+                        <path d="m9 18 6-6-6-6"></path>
+                    </svg>
+                </li>
+            @else
+                <li class="kt-breadcrumb-item">
+                    <span class="kt-breadcrumb-page">{{ $breadcrumb->title }}</span>
+                </li>
+            @endif
         @endforeach
-    </div>
+    </ol>
 @endunless
