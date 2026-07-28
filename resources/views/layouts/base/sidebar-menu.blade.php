@@ -92,15 +92,15 @@
             @foreach ($menus->$section as $menu)
                 @if (auth()->user()->hasRole($menu->roles))
                     @if (isset($menu->sub))
-                        <div class="kt-menu-item {{ request()->routeIs($menu->path) || request()->routeIs($menu->path . '.*') ? 'show active' : '' }}"
+                        <div class="kt-menu-item {{ request()->routeIs($menu->path) || request()->routeIs($menu->path . '.*') ? 'show' : '' }}"
                             data-kt-menu-item-toggle="accordion" data-kt-menu-item-trigger="click">
                             <div class="kt-menu-link flex grow cursor-pointer items-center gap-[10px] border border-transparent py-[6px] pe-[10px] ps-[10px]"
                                 tabindex="0">
-                                <span class="kt-menu-icon w-[20px] items-start text-muted-foreground">
+                                <span class="kt-menu-icon w-[20px] items-start text-muted-foreground kt-menu-item-show:text-primary">
                                     <i class="{{ $menu->icon ?? 'ki-filled ki-element-11 text-lg' }}"></i>
                                 </span>
                                 <span
-                                    class="kt-menu-title kt-menu-item-active:text-primary kt-menu-link-hover:!text-primary text-sm font-medium text-foreground">
+                                    class="kt-menu-title kt-menu-item-show:text-primary kt-menu-link-hover:!text-primary text-sm font-medium text-foreground">
                                     {!! $formatMenuTitle($menu->title) !!}
                                 </span>
                                 <span
@@ -120,7 +120,7 @@
                                     @foreach ($menu->sub as $sub)
                                         @if (auth()->user()->hasRole($sub->roles))
                                             <div
-                                                class="kt-menu-item {{ request()->routeIs($sub->path . '.*') && in_array($currentRouteName, [$sub->path . '.index', $sub->path . '.create', $sub->path . '.edit', $sub->path . '.restore']) ? 'active' : '' }}">
+                                                class="kt-menu-item {{ request()->routeIs($sub->path . '.*') || request()->routeIs($sub->path) ? 'active' : '' }}">
                                                 <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[14px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
                                                     href="{{ $sub->path ? route($sub->path . '.index') : '' }}"
                                                     tabindex="0">

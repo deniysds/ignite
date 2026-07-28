@@ -2,5 +2,6 @@
     "Usermanagement": true,
     "Logs": true,
     "Authentication": true,
+    "Location": true,
     "Basicdata": true
 }

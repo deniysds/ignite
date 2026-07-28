@@ -7,16 +7,20 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
-        "daengdeni/logs-module": "^1.0",
-        "daengdeni/location-module": "^1.0",
-        "daengdeni/usermanagement-module": "^1.0",
         "daengdeni/authentication-module": "^1.0",
+        "daengdeni/basicdata-module": "^1.0",
+        "daengdeni/location-module": "^1.0",
+        "daengdeni/log-reader": "^2.4",
+        "daengdeni/logs-module": "^1.0",
+        "daengdeni/usermanagement-module": "^1.0",
+        "diglactic/laravel-breadcrumbs": "^10.1",
         "joshbrw/laravel-module-installer": "^2.0",
         "laravel/framework": "^12.0",
         "laravel/tinker": "^2.10.1",
         "nwidart/laravel-modules": "^13.0",
         "spatie/laravel-activitylog": "^4.12",
-        "spatie/laravel-permission": "^8.3"
+        "spatie/laravel-permission": "^8.3",
+        "wildside/userstamps": "^4.0"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
@@ -111,6 +115,11 @@
             "name": "daengdeni/location-module",
             "type": "vcs",
             "url": "https://git.putrakuningan.com/daengdeni/location"
+        },
+        {
+            "name": "daengdeni/basicdata-module",
+            "type": "vcs",
+            "url": "https://git.putrakuningan.com/daengdeni/basicdata"
         }
     ]
 }

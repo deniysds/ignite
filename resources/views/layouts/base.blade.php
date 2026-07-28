@@ -12,32 +12,14 @@
     <head>
         @include('layouts.partials.head')
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @stack('styles')
     </head>
     <body class="flex h-full text-base antialiased metronic kt-sidebar-fixed kt-header-fixed bg-background text-foreground">
         @include('partials.theme-toggle')
 
-        <!-- Page -->
-        <!-- Main -->
-        <div class="flex grow">
-            @include('layouts.base.sidebar')
-
-            <!-- Wrapper -->
-            <div class="flex flex-col kt-wrapper grow">
-                @include('layouts.base.header')
-
-                <!-- Content -->
-                <main class="pt-5 grow" id="content" role="content">
-                    @yield('content')
-                </main>
-                <!-- End of Content -->
-
-                @include('layouts.base.footer')
-            </div>
-            <!-- End of Wrapper -->
-        </div>
-        <!-- End of Main -->
-        <!-- End of Page -->
+        @yield('main')
 
         @include('layouts.partials.scripts')
+        @stack('scripts')
     </body>
 </html>
