@@ -18,8 +18,11 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+.DS_Store
 
 /public/assets
 *.lock
 package-lock.json
 Modules
+/laravel
+.DS_Store
