@@ -5,7 +5,7 @@
         id="sidebar_header">
         <a href="#">
             <img class="max-w-none default-logo min-h-5.5 h-[53.55px]" src="{{ env('APP_LOGO') }}"/>
-            <img class="max-w-none small-logo min-h-5.5 h-12.5" src="{{ env('APP_LOGO_MINI') }}"/>
+            <img class="max-w-none h-5.5 small-logo" src="{{ env('APP_LOGO_MINI') }}"/>
         </a>
         <button
             class="kt-btn kt-btn-outline kt-btn-icon absolute start-full top-2/4 size-[30px] -translate-x-2/4 -translate-y-2/4 rtl:translate-x-2/4"

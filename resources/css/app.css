@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #35c1d0;
+  --color-primary: #D90303;
   --color-primary-foreground: #ffffff;
 
   --color-agi-50: #effcfc;
@@ -29,6 +29,8 @@
   --color-agi-dark-950: #effcfc;
 
   --color-brand-red: #ff5722;
+  --color-brand-black: #101010;
+  --color-brand-grey: #EFEFEF;
 }
 
 :root {

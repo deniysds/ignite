@@ -96,8 +96,8 @@
                             data-kt-menu-item-toggle="accordion" data-kt-menu-item-trigger="click">
                             <div class="kt-menu-link flex grow cursor-pointer items-center gap-[10px] border border-transparent py-[6px] pe-[10px] ps-[10px]"
                                 tabindex="0">
-                                <span class="kt-menu-icon w-[20px] items-start text-muted-foreground kt-menu-item-show:text-primary">
-                                    <i class="{{ $menu->icon ?? 'ki-filled ki-element-11 text-lg' }}"></i>
+                                <span class="kt-menu-icon w-[20px] items-start text-muted-foreground kt-menu-item-active:text-primary kt-menu-link-hover:!text-primary">
+                                    <i class="{{ $menu->icon ?? 'ki-filled ki-element-11 text-lg' }} {{ request()->routeIs($menu->path) || request()->routeIs($menu->path . '.*') ? 'text-primary' : '' }}"></i>
                                 </span>
                                 <span
                                     class="kt-menu-title kt-menu-item-show:text-primary kt-menu-link-hover:!text-primary text-sm font-medium text-foreground">
