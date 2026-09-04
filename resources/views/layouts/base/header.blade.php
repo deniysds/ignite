@@ -23,6 +23,16 @@
         @include('partials.mega-menu')
         <!-- Topbar -->
         <div class="flex gap-2.5 items-center">
+            <!-- Locale Switcher -->
+            <div class="flex items-center border border-gray-200 rounded-lg p-0.5 bg-gray-50 text-xs font-bold">
+                <a href="{{ route('locale.switch', 'id') }}" title="Bahasa Indonesia" class="px-2 py-1 rounded-md transition {{ app()->getLocale() === 'id' ? 'bg-white text-red-600 shadow-xs' : 'text-gray-500 hover:text-gray-900' }}">
+                    ID 🇮🇩
+                </a>
+                <a href="{{ route('locale.switch', 'en') }}" title="English" class="px-2 py-1 rounded-md transition {{ app()->getLocale() === 'en' ? 'bg-white text-red-600 shadow-xs' : 'text-gray-500 hover:text-gray-900' }}">
+                    EN 🇬🇧
+                </a>
+            </div>
+
             @include('partials.topbar-notification-dropdown')
             @include('partials.topbar-user-dropdown')
         </div>
