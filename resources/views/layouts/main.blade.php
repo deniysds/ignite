@@ -6,6 +6,8 @@
     $module = json_decode($modules);
 @endphp
 
+@push('body_classes', 'kt-sidebar-fixed kt-header-fixed')
+
 @extends('layouts.base', ['module' => $module])
 
 @section('main')

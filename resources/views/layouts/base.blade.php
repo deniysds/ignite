@@ -14,7 +14,7 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         @stack('styles')
     </head>
-    <body class="flex h-full text-base antialiased metronic kt-sidebar-fixed kt-header-fixed bg-background text-foreground">
+    <body class="flex h-full text-base antialiased metronic bg-background text-foreground @stack('body_classes')">
         @include('partials.theme-toggle')
 
         @yield('main')
