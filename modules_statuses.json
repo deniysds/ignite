@@ -3,5 +3,9 @@
     "Logs": true,
     "Authentication": true,
     "Location": true,
-    "Basicdata": true
+    "Basicdata": true,
+    "Website": true,
+    "Journals": true,
+    "Issues": true,
+    "Submissions": true
 }

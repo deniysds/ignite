@@ -3,6 +3,9 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Database\Seeders\EditorialRolesAndPermissionsSeeder;
+use Modules\Issues\Database\Seeders\IssuesDatabaseSeeder;
+use Modules\Journals\Database\Seeders\JournalsDatabaseSeeder;
 use Modules\Logs\Database\Seeders\LogsDatabaseSeeder;
 use Modules\Usermanagement\Database\Seeders\UsermanagementDatabaseSeeder;
 use Modules\Location\Database\Seeders\LocationDatabaseSeeder;
@@ -18,8 +21,11 @@ class DatabaseSeeder extends Seeder
         $this->call([
             BasicdataDatabaseSeeder::class,
             UsermanagementDatabaseSeeder::class,
+            EditorialRolesAndPermissionsSeeder::class,
             LogsDatabaseSeeder::class,
             LocationDatabaseSeeder::class,
+            JournalsDatabaseSeeder::class,
+            IssuesDatabaseSeeder::class
         ]);
     }
 }

@@ -3,6 +3,27 @@
 @theme {
   --color-primary: #D90303;
   --color-primary-foreground: #ffffff;
+  --color-primary-light: #fde8e8;
+
+  --color-success: #17c653;
+  --color-success-foreground: #ffffff;
+  --color-success-light: #e8fff3;
+
+  --color-warning: #f6c000;
+  --color-warning-foreground: #ffffff;
+  --color-warning-light: #fff8dd;
+
+  --color-danger: #f8285a;
+  --color-danger-foreground: #ffffff;
+  --color-danger-light: #ffeef3;
+
+  --color-info: #1b84ff;
+  --color-info-foreground: #ffffff;
+  --color-info-light: #eff6ff;
+
+  --color-secondary: #f1f1f4;
+  --color-secondary-foreground: #252f4a;
+  --color-secondary-light: #f9f9fb;
 
   --color-agi-50: #effcfc;
   --color-agi-100: #d5f6f8;
@@ -36,6 +57,31 @@
 :root {
   --primary: var(--color-primary);
   --primary-foreground: var(--color-primary-foreground);
+
+  /* Metronic compatibility variables */
+  --tw-primary: var(--color-primary);
+  --tw-primary-light: var(--color-primary-light);
+  --tw-primary-clarity: rgba(217, 3, 3, 0.2);
+
+  --tw-success: var(--color-success);
+  --tw-success-light: var(--color-success-light);
+  --tw-success-clarity: rgba(23, 198, 83, 0.2);
+
+  --tw-warning: var(--color-warning);
+  --tw-warning-light: var(--color-warning-light);
+  --tw-warning-clarity: rgba(246, 192, 0, 0.2);
+
+  --tw-danger: var(--color-danger);
+  --tw-danger-light: var(--color-danger-light);
+  --tw-danger-clarity: rgba(248, 40, 90, 0.2);
+
+  --tw-info: var(--color-info);
+  --tw-info-light: var(--color-info-light);
+  --tw-info-clarity: rgba(27, 132, 255, 0.2);
+
+  --tw-secondary: var(--color-secondary);
+  --tw-secondary-light: var(--color-secondary-light);
+  --tw-secondary-clarity: rgba(241, 241, 244, 0.5);
 }
 
 .agi {

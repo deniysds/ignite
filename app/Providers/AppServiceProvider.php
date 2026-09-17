@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -21,5 +22,16 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Model::automaticallyEagerLoadRelationships();
+
+        // Auto-discover migrations from all modules
+        $modulesPath = base_path('Modules');
+        if (File::isDirectory($modulesPath)) {
+            foreach (File::directories($modulesPath) as $moduleDir) {
+                $migrationDir = $moduleDir . '/database/migrations';
+                if (File::isDirectory($migrationDir)) {
+                    $this->loadMigrationsFrom($migrationDir);
+                }
+            }
+        }
     }
 }

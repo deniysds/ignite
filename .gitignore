@@ -26,3 +26,4 @@ package-lock.json
 Modules
 /laravel
 .DS_Store
+/graphify-out
