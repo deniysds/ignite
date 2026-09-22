@@ -7,7 +7,7 @@
 <meta content="{{ env('APP_URL') }}" name="twitter:site" />
 <meta content="{{ env('APP_NAME') }}" name="twitter:creator" />
 <meta content="summary_large_image" name="twitter:card" />
-<meta content="{{ env('APP_NAME') }} - name="twitter:title" />
+<meta content="{{ env('APP_NAME') }}" name="twitter:title" />
 <meta content="" name="twitter:description" />
 <meta content="{{ asset('assets/media/app/og-image.png') }}" name="twitter:image" />
 <meta content="{{ url(request()->path()) }}" property="og:url" />
@@ -17,6 +17,7 @@
 <meta content="{{ env('APP_NAME') }}" property="og:title" />
 <meta content="" property="og:description" />
 <meta content="{{ asset('assets/media/app/og-image.png') }}" property="og:image" />
+@stack('meta')
 <link href="{{ asset('assets/media/app/apple-touch-icon.png') }}" rel="apple-touch-icon" sizes="180x180" />
 <link href="{{ asset('assets/media/app/favicon-32x32.png') }}" rel="icon" sizes="32x32" type="image/png" />
 <link href="{{ asset('assets/media/app/favicon-16x16.png') }}" rel="icon" sizes="16x16" type="image/png" />

@@ -10,6 +10,7 @@ use Modules\Logs\Database\Seeders\LogsDatabaseSeeder;
 use Modules\Usermanagement\Database\Seeders\UsermanagementDatabaseSeeder;
 use Modules\Location\Database\Seeders\LocationDatabaseSeeder;
 use Modules\Basicdata\Database\Seeders\BasicdataDatabaseSeeder;
+use Modules\Website\Database\Seeders\WebsiteDatabaseSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -25,7 +26,8 @@ class DatabaseSeeder extends Seeder
             LogsDatabaseSeeder::class,
             LocationDatabaseSeeder::class,
             JournalsDatabaseSeeder::class,
-            IssuesDatabaseSeeder::class
+            IssuesDatabaseSeeder::class,
+            WebsiteDatabaseSeeder::class,
         ]);
     }
 }
