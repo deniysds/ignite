@@ -9,9 +9,9 @@ Route::get('/locale/{lang}', [\App\Http\Controllers\LocaleController::class, 'sw
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    Route::get('/notifications/count', function () {
-        return response()->json([
-            'count' => auth()->user()->unreadNotifications->count()
-        ]);
-    })->name('notifications.count');
+    // Pusat Notifikasi In-App (Notifications Center)
+    Route::get('/notifications', [\App\Http\Controllers\NotificationController::class, 'index'])->name('notifications.index');
+    Route::post('/notifications/{id}/read', [\App\Http\Controllers\NotificationController::class, 'markAsRead'])->name('notifications.mark_as_read');
+    Route::post('/notifications/mark-all-read', [\App\Http\Controllers\NotificationController::class, 'markAllAsRead'])->name('notifications.mark_all_read');
+    Route::get('/notifications/count', [\App\Http\Controllers\NotificationController::class, 'unreadCount'])->name('notifications.count');
 });
