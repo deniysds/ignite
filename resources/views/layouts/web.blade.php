@@ -11,14 +11,14 @@
 @section('main')
     <!-- Page -->
     <!-- Main -->
-    <div class="flex grow">
+    <div class="flex grow min-w-0 max-w-full">
 
         <!-- Wrapper -->
-        <div class="flex flex-col kt-wrapper grow">
+        <div class="flex flex-col kt-wrapper grow min-w-0 max-w-full">
 
             <!-- Content -->
-            <main class="pt-5 grow" id="content" role="content">
-                <div class="kt-container-fluid">
+            <main class="pt-5 grow min-w-0 max-w-full" id="content" role="content">
+                <div class="kt-container-fluid min-w-0 max-w-full">
                     @yield('content')
                 </div>
             </main>

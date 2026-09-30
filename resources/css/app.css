@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@source "../../Modules";
+@source "../views";
 
 @theme {
   --color-primary: #D90303;
@@ -104,4 +106,16 @@
   --color-primary-foreground: var(--color-agi-dark-950);
   --primary: var(--color-primary);
   --primary-foreground: var(--color-primary-foreground);
+}
+
+/* Layout & Overflow Protections */
+.marquee-container {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
+}
+
+[x-cloak] {
+  display: none !important;
 }
