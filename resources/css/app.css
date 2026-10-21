@@ -100,6 +100,10 @@
   font-weight: 500 !important;
 }
 
+.font-semibold {
+  font-weight: 600 !important;
+}
+
 .agi {
   --color-primary: var(--color-agi-400);
   --color-primary-foreground: #ffffff;
