@@ -27,3 +27,6 @@ Modules
 /laravel
 .DS_Store
 /graphify-out
+*.zip
+*.sql
+
