@@ -17,8 +17,8 @@
         <div class="flex flex-col kt-wrapper grow min-w-0 max-w-full">
 
             <!-- Content -->
-            <main class="pt-0 sm:pt-5 grow min-w-0 max-w-full" id="content" role="content">
-                <div class="kt-container-fluid min-w-0 max-w-full">
+            <main class="p-0 m-0 grow min-w-0 max-w-full" id="content" role="content">
+                <div class="w-full min-w-0 max-w-full p-0 m-0">
                     @yield('content')
                 </div>
             </main>
