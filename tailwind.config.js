@@ -11,7 +11,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Montserrat', 'Inter', 'sans-serif'],
+        sans: ['Poppins', 'Inter', 'sans-serif'],
       },
       colors: {
         'background': 'rgb(var(--tw-color-background) / <alpha-value>)',
