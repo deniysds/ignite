@@ -5,8 +5,8 @@
     <div class="flex justify-between items-stretch kt-container-fluid lg:gap-4" id="headerContainer">
         <!-- Mobile Logo -->
         <div class="flex gap-2.5 items-center -ms-1 lg:hidden">
-            <a class="shrink-0" href="#">
-                <img class="max-h-[25px] w-full" src="assets/media/app/mini-logo.svg" />
+            <a class="shrink-0" href="{{ url('/') }}">
+                <img class="max-h-[25px] w-auto object-contain" src="{{ asset(env('APP_LOGO_MINI') ?: 'assets/media/app/logo-ignite-mini.png') }}" alt="{{ env('APP_NAME', 'IGNITE') }}" />
             </a>
             <div class="flex items-center">
                 <button class="kt-btn kt-btn-icon kt-btn-ghost" data-kt-drawer-toggle="#sidebar">
