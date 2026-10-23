@@ -1,6 +1,6 @@
 # 📚 Dokumentasi Sistem Lengkap: Laravel 12 Dashboard Template (Ignite)
 
-Dokumentasi arsitektur, modul aplikasi, skema data, infrastruktur, dan panduan pengembangan untuk **Laravel 12 Dashboard Template (Ignite)**.
+Dokumentasi arsitektur, modul aplikasi, skema data, infrastruktur, dan panduan pengembangan untuk **Laravel 12 Dashboard Template (Ignite)**. Dokumen induk terpadu (9 dokumentasi SDLC & alur editorial) tersedia di [ignite-complete-master-documentation.html](file:///Users/daengdeni/Development/.ysds/.ignite/ignite-implementation-guide/ignite-complete-master-documentation.html) dan [ignite-complete-master-documentation.pdf](file:///Users/daengdeni/Development/.ysds/.ignite/ignite-implementation-guide/ignite-complete-master-documentation.pdf). Spesifikasi kebutuhan fungsional & alur produk lengkap dapat dilihat di [PRD.md](file:///Users/daengdeni/Development/.ysds/.ignite/PRD.md), serta buku panduan operasional pengguna & SOP sistem di [ignite-user-manual-sop.html](file:///Users/daengdeni/Development/.ysds/.ignite/ignite-implementation-guide/ignite-user-manual-sop.html).
 
 ---
 
