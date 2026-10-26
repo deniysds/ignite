@@ -30,3 +30,13 @@ Modules
 *.zip
 *.sql
 
+# Local documents & specifications
+PRD.md
+/ignite-implementation-guide/ignite-complete-master-documentation.*
+/ignite-implementation-guide/ignite-implementation-guide.pdf
+/ignite-implementation-guide/ignite-user-manual-sop.*
+
+# Local seeders & tests
+/database/seeders/IgniteUserAndRoleSeeder.php
+/tests/Feature/IgniteUserAndRoleSeederTest.php
+
