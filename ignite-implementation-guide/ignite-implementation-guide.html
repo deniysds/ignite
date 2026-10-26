@@ -473,57 +473,120 @@
     <nav class="toc">
       <h2>Isi dokumen</h2>
       <ol>
-        <li><a href="#konteks">Konteks produk</a></li>
-        <li><a href="#sasaran">Sasaran implementasi</a></li>
+        <li><a href="#konteks">Konteks produk &amp; Problem Statement</a></li>
+        <li><a href="#sasaran">Sasaran implementasi &amp; Metrik Keberhasilan</a></li>
         <li><a href="#arsitektur">Arsitektur sistem</a></li>
-        <li><a href="#modul">Modul inti</a></li>
+        <li><a href="#modul">Modul inti &amp; Kebutuhan Fungsional</a></li>
         <li><a href="#data">Model data inti</a></li>
-        <li><a href="#roles">Roles dan hak akses</a></li>
-        <li><a href="#workflow">Peer-review workflow</a></li>
+        <li><a href="#roles">Roles, Hak Akses &amp; User Stories</a></li>
+        <li><a href="#workflow">Peer-review workflow &amp; State Machine</a></li>
+        <li><a href="#dokumen">Daftar Dokumen Wajib (SDLC &amp; Alur Editorial)</a></li>
         <li><a href="#aturan">Aturan bisnis dan otomasi</a></li>
-        <li><a href="#tahapan">Tahapan implementasi</a></li>
+        <li><a href="#nfr">Kebutuhan Non-Fungsional &amp; Keamanan</a></li>
+        <li><a href="#pengujian">Skenario Pengujian (Acceptance Criteria)</a></li>
+        <li><a href="#tahapan">Tahapan implementasi &amp; Roadmap</a></li>
         <li><a href="#estimasi">Estimasi manual</a></li>
-        <li><a href="#keputusan">Keputusan awal yang disarankan</a></li>
+        <li><a href="#keputusan">Keputusan awal &amp; Manajemen Risiko</a></li>
       </ol>
     </nav>
 
     <main>
       <section id="konteks">
-        <h2>Konteks produk</h2>
+        <h2>Konteks produk &amp; Problem Statement</h2>
         <p>
-          Materi IGNITE menunjukkan bahwa program ini bergerak di ekosistem riset, genomik, pendidikan, jejaring laboratorium, dan kolaborasi institusional lintas sektor.<sup><a href="#cite-1">[1]</a></sup> Karena itu, website Ignite tidak cukup jika hanya dibangun sebagai company profile; platform ini lebih tepat menjadi <strong>content management system untuk publikasi ilmiah dan pengetahuan institusional</strong>, dengan kemampuan menayangkan jurnal, issue, artikel, profil program, dan kegiatan riset.
+          Materi IGNITE menunjukkan bahwa program ini bergerak di ekosistem riset, genomik, pendidikan, jejaring laboratorium, dan kolaborasi institusional lintas sektor di bawah naungan <strong>Yayasan Satriabudi Dharma Setia (YSDS)</strong>.<sup><a href="#cite-1">[1]</a></sup> Karena itu, website Ignite tidak cukup jika hanya dibangun sebagai company profile; platform ini lebih tepat menjadi <strong>content management system untuk publikasi ilmiah dan pengetahuan institusional</strong>, dengan kemampuan menayangkan jurnal, issue, artikel, profil program, dan kegiatan riset.
         </p>
         <p>
-          Gambar status dokumen yang Anda lampirkan juga memperlihatkan pola editorial yang sangat dekat dengan Open Journal Systems, yakni ada fase submit, evaluasi editor, review, revisi, accepted, editing, proof, hingga published.<sup><a href="#cite-2">[2]</a></sup> Itu berarti fondasi arsitektur harus diperlakukan sebagai <strong>workflow-driven publishing platform</strong>, bukan hanya blog atau news portal.
+          Pola editorial yang diadopsi sangat dekat dengan Open Journal Systems (OJS), yakni ada fase submit, evaluasi editor, review, revisi, accepted, editing, proof, hingga published.<sup><a href="#cite-2">[2]</a></sup> Fondasi arsitektur harus diperlakukan sebagai <strong>workflow-driven publishing platform</strong> yang diaudit ketat, bukan sekadar blog atau news portal.
         </p>
+
+        <h3>Pernyataan Masalah (The User Problem)</h3>
+        <ol>
+          <li><strong>CMS Konvensional Tidak Memiliki Workflow Ilmiah:</strong> CMS biasa tidak mampu memfasilitasi alur peer-review multi-putaran, penugasan reviewer ganda secara blind, penguncian versi naskah, atau jejak audit keputusan akademik.</li>
+          <li><strong>Keterbatasan Platform OJS Konvensional:</strong> Menggunakan platform monolitik lawas menyulitkan integrasi visual dengan identitas jenama (branding) modern IGNITE/YSDS, kustomisasi stack modern (TailwindCSS v4, Metronic UI Engine), serta integrasi data terpadu lintas modul organisasi.</li>
+          <li><strong>Risiko Integritas Dokumen:</strong> Tanpa mesin status (state machine) yang kaku dan validasi transisi, naskah rentan tertukar versi, mengalami keterlambatan tanpa notifikasi, atau kehilangan rekam jejak keputusan editor.</li>
+        </ol>
+
         <div class="callout">
-          <div class="callout-title">Arah produk</div>
-          <p>Ignite sebaiknya dibagi ke dua wajah utama: website publik untuk konsumsi pembaca dan dashboard editorial untuk mengelola seluruh siklus naskah ilmiah.</p>
+          <div class="callout-title">Arah produk &amp; Solusi Terpadu</div>
+          <p>Ignite memadukan dua wajah utama: <strong>website publik</strong> modern berbasis TailwindCSS untuk konsumsi pembaca dan <strong>dashboard editorial modular</strong> berbasis Laravel 12 untuk mengelola seluruh siklus hidup naskah ilmiah secara transparan dan akuntabel.</p>
         </div>
       </section>
 
       <section id="sasaran">
-        <h2>Sasaran implementasi</h2>
+        <h2>Sasaran implementasi &amp; Metrik Keberhasilan</h2>
         <p>
-          Sasaran fase awal yang paling sehat adalah membangun <strong>MVP editorial</strong> yang mampu menerima submission, melakukan penugasan editor, menjalankan peer review, mencatat revisi penulis, menerbitkan artikel, dan menampilkan arsip publik per issue. Fitur yang terlalu dini seperti scoring bibliometrik, integrasi DOI otomatis, atau analytics kompleks bisa ditempatkan pada fase lanjutan agar domain inti stabil lebih dulu.
+          Sasaran fase awal adalah membangun <strong>MVP editorial</strong> yang mampu menerima submission, melakukan penugasan editor, menjalankan peer review, mencatat revisi penulis, menerbitkan artikel, dan menampilkan arsip publik per issue. Fitur yang terlalu dini seperti scoring bibliometrik kompleks atau payment gateway otomatis ditempatkan pada fase lanjutan agar domain inti stabil lebih dulu.
         </p>
+
         <div class="col-grid">
           <div class="col-item">
             <h4>Tujuan publik</h4>
-            <p>Memudahkan pembaca mencari jurnal, issue, artikel, penulis, kata kunci, dan topik riset Ignite.</p>
+            <p>Memudahkan pembaca mencari jurnal, issue, artikel, penulis, kata kunci, sitasi otomatis, dan topik riset Ignite.</p>
           </div>
           <div class="col-item">
             <h4>Tujuan editorial</h4>
-            <p>Menyediakan workflow yang rapi dari submission sampai publication, lengkap dengan audit trail dan SLA.</p>
+            <p>Menyediakan workflow terstruktur dari submission sampai publication, lengkap dengan audit trail dan SLA review.</p>
           </div>
           <div class="col-item">
             <h4>Tujuan tata kelola</h4>
-            <p>Memisahkan otoritas antar author, editor, reviewer, dan administrator agar konflik peran bisa dikontrol.</p>
+            <p>Memisahkan otoritas antar author, editor, reviewer, dan administrator agar potensi konflik kepentingan dapat dicegah.</p>
           </div>
         </div>
-        <p>
-          Untuk stack yang Anda gunakan, kombinasi <code>Laravel 12</code>, <code>nwidart/laravel-modules</code>, <code>PostgreSQL</code>, <code>TailwindCSS</code>, dan <code>AlpineJS</code> sudah tepat. Pola ini cukup fleksibel untuk kebutuhan website publik sekaligus dashboard operasional tanpa harus memecah ke dua aplikasi terpisah pada fase pertama.
-        </p>
+
+        <h3>Metrik Keberhasilan Terukur (Success Metrics)</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Tipe Metrik</th>
+                <th>Indikator</th>
+                <th>Target Sasaran</th>
+                <th>Metode Pengukuran</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Leading Indicator</strong></td>
+                <td>Penyelesaian Form Submission</td>
+                <td>&gt; 85% draf disubmit tuntas tanpa kendala form wizard</td>
+                <td>Rasio transisi status <code>draft</code> ke <code>submitted</code></td>
+              </tr>
+              <tr>
+                <td><strong>Leading Indicator</strong></td>
+                <td>Respons Undangan Reviewer</td>
+                <td>Rata-rata &lt; 72 jam untuk konfirmasi kesediaan review</td>
+                <td>Selisih waktu kirim undangan vs waktu terima di <code>reviewer_assignments</code></td>
+              </tr>
+              <tr>
+                <td><strong>Leading Indicator</strong></td>
+                <td>Kecepatan Muat Web (TTFB)</td>
+                <td>TTFB &lt; 200 ms dan Skor LCP &lt; 1.5 detik</td>
+                <td>Pengujian Lighthouse &amp; Laravel Pulse profiling</td>
+              </tr>
+              <tr>
+                <td><strong>Lagging Indicator</strong></td>
+                <td>Siklus Review Naskah (Turnaround)</td>
+                <td>Keputusan pertama rata-rata &lt; 21 hari kerja</td>
+                <td>Log riwayat <code>submission_histories</code></td>
+              </tr>
+              <tr>
+                <td><strong>Lagging Indicator</strong></td>
+                <td>Kepatuhan Pengindeksan Sitasi</td>
+                <td>100% artikel terbit memiliki metadata Crossref XML valid</td>
+                <td>Validasi skema XML Crossref &amp; meta tags Google Scholar</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Ruang Lingkup Luar (Non-Goals Fase 1)</h3>
+        <ul>
+          <li><strong>Integrasi Otomatis Turnitin/iThenticate API:</strong> Skor similaritas dicek mandiri oleh tim editorial dan berkas laporan diunggah sebagai berkas lampiran pendukung.</li>
+          <li><strong>Payment Gateway Biaya APC (Article Processing Charge):</strong> Pembayaran dikelola melalui invoice administratif mandiri di luar sistem checkout instan.</li>
+          <li><strong>Konversi Otomatis Full-text JATS XML:</strong> Output publikasi difokuskan pada berkas Galley PDF beresolusi tinggi dan landing page metadata artikel.</li>
+          <li><strong>Single Sign-On (SSO) Federasi Kampus (eduGAIN/SAML):</strong> Otentikasi memprioritaskan akun lokal terverifikasi, Google OAuth (opsional), dan 2FA TOTP.</li>
+        </ul>
       </section>
 
       <section id="arsitektur">
@@ -605,9 +668,9 @@ flowchart TD
       </section>
 
       <section id="modul">
-        <h2>Modul inti</h2>
+        <h2>Modul inti &amp; Kebutuhan Fungsional</h2>
         <p>
-          Dengan <code>laravel-modules</code>, saya menyarankan pemisahan domain berikut agar perubahan fitur editorial tidak mengganggu lapisan website publik. Tiap modul memiliki controller, action/service, request validation, policy, event, dan job sendiri.
+          Dengan <code>nwidart/laravel-modules</code>, pemisahan domain dibuat modular agar perubahan fitur editorial tidak mengganggu lapisan website publik. Tiap modul memiliki controller, service layer, request validation, model, policy, event, dan job sendiri.
         </p>
         <div class="table-wrap">
           <table>
@@ -620,71 +683,67 @@ flowchart TD
             </thead>
             <tbody>
               <tr>
-                <td><code>Core</code></td>
-                <td>User, role, permission, audit log, konfigurasi sistem</td>
-                <td>Tata kelola platform</td>
+                <td><code>Authentication</code> &amp; <code>Usermanagement</code></td>
+                <td>User, role, permission, 2FA TOTP, audit log, konfigurasi sistem</td>
+                <td>Tata kelola akses &amp; keamanan platform</td>
               </tr>
               <tr>
                 <td><code>Website</code></td>
                 <td>Halaman publik, menu, hero, profil program, berita, static pages</td>
-                <td>Experience pembaca dan institusi</td>
+                <td>Experience pembaca dan diseminasi institusi</td>
               </tr>
               <tr>
-                <td><code>Journals</code></td>
-                <td>Data jurnal, scope, focus, guideline, editorial board, KTUI Design System & Datatable (Server-side, Bulk Delete / Delete Selected, Relational Constraint Delete Guard, Export CSV, Multi-Language EN/ID, Service Layer Pattern, Form Request Validation, Security Hardening)</td>
-                <td>Katalog master jurnal & tim redaksi berspesifikasi standar Ignite</td>
+                <td><code>Journals</code> &amp; <code>Basicdata</code></td>
+                <td>Data jurnal, scope, focus, guideline, editorial board, hierarki wilayah Indonesia</td>
+                <td>Katalog master jurnal &amp; tim redaksi berspesifikasi standar Ignite</td>
               </tr>
               <tr>
                 <td><code>Issues</code></td>
-                <td>Volume, nomor, tahun, daftar artikel, status terbit</td>
-                <td>Arsip dan issue publik</td>
+                <td>Volume, nomor, tahun, daftar artikel, status terbit, generator Crossref XML</td>
+                <td>Arsip dan issue publik &amp; interoperabilitas DOI</td>
               </tr>
               <tr>
                 <td><code>Submissions</code></td>
-                <td>Metadata artikel, file naskah, author list, declaration, status</td>
-                <td>Manajemen naskah masuk</td>
+                <td>Submission wizard, metadata artikel, file naskah, author list, reviewer workspace, alur revisi</td>
+                <td>Manajemen siklus naskah &amp; peer-review terintegrasi</td>
               </tr>
               <tr>
-                <td><code>Reviews</code></td>
-                <td>Reviewer invitation, assignment, review form, recommendation, due date</td>
-                <td>Workflow peer review</td>
-              </tr>
-              <tr>
-                <td><code>Editorial</code></td>
-                <td>Desk review, decision, revision request, acceptance, rejection</td>
-                <td>Keputusan editor</td>
-              </tr>
-              <tr>
-                <td><code>Production</code></td>
-                <td>Language editing, proofreading, galley, DOI, scheduling issue</td>
-                <td>Kesiapan publikasi</td>
-              </tr>
-              <tr>
-                <td><code>Notifications</code></td>
-                <td>Email template, reminder, in-app notification, activity feed</td>
-                <td>Komunikasi otomatis</td>
+                <td><code>Logs</code></td>
+                <td>Audit logs (who, what, when, old/new diff), system log viewer terintegrasi</td>
+                <td>Auditabilitas &amp; observabilitas sistem</td>
               </tr>
             </tbody>
           </table>
         </div>
 
-        <h3>Fitur publik minimum</h3>
-        <ul>
-          <li>Homepage Ignite yang menjelaskan positioning, jurnal aktif, issue terbaru, dan artikel terbaru.</li>
-          <li>Halaman daftar jurnal dengan focus and scope, editorial board, author guideline, dan publication ethics.</li>
-          <li>Halaman article detail berisi metadata lengkap, abstract, kata kunci, author affiliation, file PDF, dan sitasi.</li>
-          <li>Halaman issue archive yang bisa difilter berdasarkan tahun, volume, dan nomor terbit.</li>
-        <li>Pencarian artikel berdasarkan judul, penulis, kata kunci, dan bidang.</li>
-        </ul>
-
-        <h3>Fitur editorial minimum</h3>
-        <ul>
-          <li><strong>Modul Journals (Master Data & Editorial Board)</strong>: Menggunakan KTUI Design System, KTUI Datatable (Server-side), Delete Selected (Bulk Delete), Proteksi Hapus jika ada relasi data aktif, Ekspor Data (CSV UTF-8 BOM), Multi-Language (EN/ID), Service Layer Pattern (<code>JournalService</code>), Form Request Validation (<code>JournalRequest</code>), Database Query Optimization (Eager loading & Indexing), dan Security Hardening (Permission guards).</li>
-          <li>Submission wizard untuk author, termasuk upload file utama dan file pendukung.</li>
-          <li>Dashboard editor dengan inbox status, overdue review, revision pending, dan accepted queue.</li>
-          <li>Reviewer workspace untuk menerima atau menolak invitation, mengunduh naskah, dan mengirim rekomendasi.</li>
-          <li>Riwayat aktivitas per submission agar semua transisi dapat diaudit.</li>
-        </ul>
+        <h3>Spesifikasi Kebutuhan Fungsional (Prioritas MoSCoW)</h3>
+        
+        <div class="col-grid">
+          <div class="col-item">
+            <h4>FR-01: Autentikasi &amp; Keamanan Akun <span class="badge">P0</span></h4>
+            <p>Registrasi mandiri penulis/pembaca dengan verifikasi surel, Two-Factor Authentication (2FA TOTP Google Authenticator) wajib untuk Editor/Reviewer/Admin, dan pencatatan riwayat sesi login.</p>
+          </div>
+          <div class="col-item">
+            <h4>FR-02: Master Jurnal &amp; Dewan Redaksi <span class="badge">P0</span></h4>
+            <p>Pengelolaan multi-jurnal (ISSN, e-ISSN, skop, author guidelines), penugasan dewan editor (Editor in Chief, Section Editor), dan proteksi hapus berelasi (delete guard).</p>
+          </div>
+          <div class="col-item">
+            <h4>FR-03: Portal Publik &amp; Sitasi Ilmiah <span class="badge">P0</span></h4>
+            <p>Homepage responsif TailwindCSS v4, arsip terbitan per volume/nomor, detail artikel lengkap (abstrak dwibahasa, afiliasi, tanggal riwayat), unduh berkas PDF, serta generator sitasi (APA, IEEE, Harvard, BibTeX).</p>
+          </div>
+          <div class="col-item">
+            <h4>FR-04: Multi-Step Submission Wizard <span class="badge">P0</span></h4>
+            <p>Formulir 5 langkah pengajuan: (1) Jurnal &amp; checklist etika, (2) Metadata naskah, (3) Multi-author &amp; korespondensi, (4) Unggah berkas (.docx/.pdf, max 25MB, file anonymized &amp; supplementary), (5) Konfirmasi final.</p>
+          </div>
+          <div class="col-item">
+            <h4>FR-05: Editor &amp; Reviewer Workspace <span class="badge">P0</span></h4>
+            <p>Inbox editor dengan filter overdue, penugasan reviewer via surel bertoken aman (Accept/Decline), formulir rubrik evaluasi ilmiah terstruktur, dan siklus putaran revisi (Revision Rounds).</p>
+          </div>
+          <div class="col-item">
+            <h4>FR-06: Produksi Galley &amp; Crossref XML <span class="badge">P0 / P1</span></h4>
+            <p>Antrean naskah accepted untuk Language Editing &amp; Proofreading, penetapan nomor halaman galley PDF, penjadwalan ke issue aktif, serta generator berkas XML Crossref resmi untuk registrasi DOI massal.</p>
+          </div>
+        </div>
       </section>
 
       <section id="data">
@@ -762,7 +821,7 @@ flowchart TD
       </section>
 
       <section id="roles">
-        <h2>Roles dan hak akses</h2>
+        <h2>Roles, Hak Akses &amp; User Stories</h2>
         <p>
           Pemisahan roles harus mengikuti batas kewenangan bisnis, bukan hanya menu dashboard. Dengan kata lain, siapa yang boleh melihat file anonim, siapa yang boleh menunjuk reviewer, siapa yang boleh mengeluarkan keputusan, dan siapa yang boleh menjadwalkan publish harus didefinisikan tegas sejak awal.
         </p>
@@ -837,10 +896,34 @@ flowchart TD
           <li>Section editor tidak boleh mengeluarkan keputusan final jika kebijakan jurnal mensyaratkan persetujuan Editor in Chief.</li>
           <li>Author tidak boleh mengubah metadata setelah status memasuki tahap produksi kecuali melalui permintaan editor.</li>
         </ul>
+
+        <h3>User Stories Utama per Persona</h3>
+        <div class="col-grid">
+          <div class="col-item">
+            <h4>Author (Penulis)</h4>
+            <p><em>Sebagai Penulis</em>, saya ingin mengajukan naskah riset melalui wizard interaktif dan memantau status telaah secara transparan agar saya mengetahui kapan harus mengunggah perbaikan.</p>
+          </div>
+          <div class="col-item">
+            <h4>Section Editor</h4>
+            <p><em>Sebagai Editor Naskah</em>, saya ingin mengecek kelengkapan awal naskah dan menugaskan reviewer yang kompeten agar evaluasi ilmiah berjalan sesuai standar dan tepat waktu.</p>
+          </div>
+          <div class="col-item">
+            <h4>Reviewer</h4>
+            <p><em>Sebagai Reviewer</em>, saya ingin mengakses naskah anonim dan mengisi rubrik penilaian terstruktur agar dapat memberikan rekomendasi objektif kepada dewan redaksi.</p>
+          </div>
+          <div class="col-item">
+            <h4>Editor in Chief</h4>
+            <p><em>Sebagai Pemimpin Redaksi</em>, saya ingin meninjau rekapitulasi rekomendasi reviewer dan mengeluarkan keputusan resmi (Accept/Reject/Revision) serta menugaskan penerbitan.</p>
+          </div>
+          <div class="col-item">
+            <h4>Reader (Pembaca Publik)</h4>
+            <p><em>Sebagai Peneliti / Pembaca</em>, saya ingin mencari artikel genomik/kesehatan, membaca abstrak, mengunduh PDF galley, dan menyalin sitasi dengan mudah.</p>
+          </div>
+        </div>
       </section>
 
       <section id="workflow">
-        <h2>Peer-review workflow</h2>
+        <h2>Peer-review workflow &amp; State Machine</h2>
         <p>
           Status dari lampiran dapat diterjemahkan menjadi state machine resmi untuk submission. Implementasi ini penting agar semua transisi valid, notifikasi bisa otomatis, dan histori keputusan dapat ditelusuri kembali kapan pun.<sup><a href="#cite-2">[2]</a></sup>
         </p>
@@ -981,6 +1064,176 @@ flowchart TD
         </ul>
       </section>
 
+      <section id="dokumen">
+        <h2>Daftar Dokumen Wajib (SDLC &amp; Alur Editorial)</h2>
+        <p>
+          Dalam proyek Ignite, kebutuhan dokumen terbagi menjadi dua ranah utama: dokumen tata kelola rekayasa perangkat lunak (SDLC) dan dokumen/berkas yang diproses oleh alur penerbitan naskah ilmiah.
+        </p>
+
+        <h3>1. Dokumen Rekayasa Perangkat Lunak (SDLC &amp; Engineering)</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Nama Dokumen</th>
+                <th>Fase Proyek</th>
+                <th>Tujuan &amp; Cakupan</th>
+                <th>Status di Repositori</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td><strong>PRD / SRS</strong> (Product Requirement &amp; Software Specification)</td>
+                <td>Inisiasi &amp; Analisis</td>
+                <td>Menentukan batasan fitur publik &amp; editorial, non-goals, metrik sukses, dan user stories.</td>
+                <td><code>PRD.md</code> (Lengkap)</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td><strong>SAD</strong> (System Architecture Document)</td>
+                <td>Desain Sistem</td>
+                <td>Arsitektur HMVC Modular Laravel 12, Nginx, PostgreSQL/MySQL, Redis Queue.</td>
+                <td><code>DOCUMENTATION.md</code> (Lengkap)</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td><strong>Database Design &amp; Data Dictionary</strong></td>
+                <td>Desain Data</td>
+                <td>Skema tabel, relasi foreign key, indeksing kueri, soft deletes &amp; userstamps.</td>
+                <td><code>DOCUMENTATION.md</code> (Lengkap)</td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td><strong>API &amp; Route Specification</strong></td>
+                <td>Pengembangan</td>
+                <td>Spesifikasi endpoint REST &amp; AJAX data wilayah, server-side DataTables, export.</td>
+                <td>Route files modular di <code>Modules/*/routes</code></td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td><strong>Test Plan &amp; QA Report</strong></td>
+                <td>Pengujian</td>
+                <td>Feature tests untuk alur submission, role authorization, dan state transitions.</td>
+                <td><code>tests/</code> &amp; <code>phpunit.xml</code></td>
+              </tr>
+              <tr>
+                <td>6</td>
+                <td><strong>Deployment &amp; Docker Guide</strong></td>
+                <td>DevOps &amp; Rilis</td>
+                <td>Panduan multi-container staging/production, environment template, dan backup.</td>
+                <td><code>docker-guide.md</code> (Lengkap)</td>
+              </tr>
+              <tr>
+                <td>7</td>
+                <td><strong>Security Hardening Runbook</strong></td>
+                <td>DevOps &amp; Keamanan</td>
+                <td>Konfigurasi firewall CSF/LFD, proteksi brute-force, dan permission guards.</td>
+                <td><code>server-hardening-csf.sh</code> (Lengkap)</td>
+              </tr>
+              <tr>
+                <td>8</td>
+                <td><strong>User Manual / SOP Sistem</strong></td>
+                <td>Serah Terima</td>
+                <td>Buku panduan operasional per role (Author, Reviewer, Editor, Journal Manager).</td>
+                <td>Direncanakan pada Fase 4</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>2. Dokumen Siklus Hidup Naskah Jurnal (Editorial Lifecycle)</h3>
+        <p>
+          Sesuai alur peer-review OJS yang diadopsi Ignite, terdapat 10 jenis dokumen/berkas yang diproduksi dan diarsipkan:
+        </p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Nama Dokumen Editorial</th>
+                <th>Tahap Transisi</th>
+                <th>Aktor Terkait</th>
+                <th>Format &amp; Catatan</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td><strong>Original Manuscript</strong> (Naskah Utama)</td>
+                <td>Draft &rarr; Submitted</td>
+                <td>Author</td>
+                <td>DOCX/PDF berisi judul, abstrak, metodologi, hasil riset, dan referensi.</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td><strong>Cover Letter</strong> (Surat Pengantar)</td>
+                <td>Submitted</td>
+                <td>Author &rarr; Editor</td>
+                <td>Pernyataan orisinalitas dan signifikansi riset biomedis/genomik kepada dewan editor.</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td><strong>Ethical Declaration / CoI Statement</strong></td>
+                <td>Submitted</td>
+                <td>Author</td>
+                <td>Persetujuan klirens etik dan pernyataan bebas konflik kepentingan.</td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td><strong>Supplementary Files</strong> (Data Pendukung)</td>
+                <td>In Review</td>
+                <td>Author</td>
+                <td>Dataset mentah, spreadsheet (.xlsx), atau gambar beresolusi tinggi.</td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td><strong>Reviewer Evaluation Sheet</strong> (Rubrik Penilaian)</td>
+                <td>In Review</td>
+                <td>Reviewer</td>
+                <td>Form evaluasi skor ilmiah, masukan untuk penulis, dan rekomendasi rahasia ke editor.</td>
+              </tr>
+              <tr>
+                <td>6</td>
+                <td><strong>Editorial Decision Letter</strong> (Surat Keputusan)</td>
+                <td>In Revision / Rejected</td>
+                <td>Editor</td>
+                <td>Surat keputusan resmi permintaan revisi atau penolakan dengan poin-poin masukan.</td>
+              </tr>
+              <tr>
+                <td>7</td>
+                <td><strong>Response to Reviewers</strong> (Matriks Tanggapan)</td>
+                <td>Revised by Author</td>
+                <td>Author</td>
+                <td>Tabel respons butir-demi-butir penulis terhadap kritik/masukan reviewer.</td>
+              </tr>
+              <tr>
+                <td>8</td>
+                <td><strong>Letter of Acceptance (LoA)</strong></td>
+                <td>Accepted</td>
+                <td>Editor in Chief</td>
+                <td>Surat tanda naskah resmi diterima untuk diterbitkan pada edisi mendatang.</td>
+              </tr>
+              <tr>
+                <td>9</td>
+                <td><strong>Galley Proof Draft</strong> (Draf Tata Letak)</td>
+                <td>Proofreading</td>
+                <td>Layout Editor / Author</td>
+                <td>Pengecekan tata letak, penomoran halaman, dan tipografi akhir sebelum cetak.</td>
+              </tr>
+              <tr>
+                <td>10</td>
+                <td><strong>Final Published Article &amp; Crossref XML</strong></td>
+                <td>Published</td>
+                <td>Production Admin / Reader</td>
+                <td>File PDF final publik dan berkas XML metadata untuk pendaftaran DOI Crossref.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
       <section id="aturan">
         <h2>Aturan bisnis dan otomasi</h2>
         <p>
@@ -1045,6 +1298,65 @@ spatie/laravel-activitylog
 spatie/laravel-medialibrary atau storage custom
 laravel/scout (opsional untuk pencarian)
 laravel/horizon atau queue worker sederhana untuk email dan reminder</code></pre>
+      </section>
+
+      <section id="nfr">
+        <h2>Kebutuhan Non-Fungsional &amp; Keamanan</h2>
+        <div class="col-grid">
+          <div class="col-item">
+            <h4>Kinerja &amp; Kecepatan (Performance)</h4>
+            <p>Target respons server (TTFB) &lt; 200ms pada halaman publik. Seluruh query pada KTUI DataTables menggunakan pagination server-side dan eager loading untuk menghindari kueri N+1.</p>
+          </div>
+          <div class="col-item">
+            <h4>Keamanan &amp; Penyimpanan Privat</h4>
+            <p>Otentikasi 2FA TOTP wajib untuk akun redaksi. Berkas naskah tahap review disimpan di storage privat terisolasi dan hanya dapat diakses melalui controller terotorisasi, bukan URL publik langsung.</p>
+          </div>
+          <div class="col-item">
+            <h4>Kepatuhan Standar Akademik (COPE)</h4>
+            <p>Alur peer-review mengacu pada panduan Committee on Publication Ethics (COPE). Metadata artikel dioptimasi dengan tag Dublin Core dan Google Scholar untuk keterindeksan maksimal.</p>
+          </div>
+          <div class="col-item">
+            <h4>Keandalan Infrastruktur (Reliability)</h4>
+            <p>Pengiriman email notifikasi dan generator ekspor berjalan asinkron di antrean Redis Queue. Skema database menerapkan SoftDeletes pada seluruh entitas relasional.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="pengujian">
+        <h2>Skenario Pengujian (Acceptance Criteria)</h2>
+        <p>Skenario pengujian kritis menggunakan format <em>Given-When-Then</em> untuk memvalidasi alur utama:</p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Skenario</th>
+                <th>Prasyarat (Given)</th>
+                <th>Aksi (When)</th>
+                <th>Hasil yang Diharapkan (Then)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>1. Penyerahan Naskah Baru</strong></td>
+                <td>Author login dan melengkapi 5 langkah wizard submission.</td>
+                <td>Mengklik tombol &quot;Kirim Naskah (Submit)&quot;.</td>
+                <td>Status berubah dari <code>draft</code> ke <code>submitted</code>, nomor unik terbit, surel konfirmasi terkirim ke author.</td>
+              </tr>
+              <tr>
+                <td><strong>2. Penugasan &amp; Respons Reviewer</strong></td>
+                <td>Naskah berstatus <code>with_editor</code> dan editor memilih 2 reviewer.</td>
+                <td>Editor mengirim undangan dan kedua reviewer menyetujui penugasan.</td>
+                <td>Status naskah berpindah ke <code>in_review</code>, reviewer menerima akses berkas anonymized dan rubrik review.</td>
+              </tr>
+              <tr>
+                <td><strong>3. Publikasi Artikel ke Website</strong></td>
+                <td>Naskah selesai proofreading dan dijadwalkan ke issue aktif.</td>
+                <td>Production Editor memublikasikan issue tersebut.</td>
+                <td>Status artikel menjadi <code>published</code>, tampil di arsip publik, file PDF dapat diunduh, dan Crossref XML siap diekspor.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </section>
 
       <section id="tahapan">
@@ -1112,22 +1424,62 @@ laravel/horizon atau queue worker sederhana untuk email dan reminder</code></pre
       </section>
 
       <section id="keputusan">
-        <h2>Keputusan awal yang disarankan</h2>
+        <h2>Keputusan awal &amp; Manajemen Risiko</h2>
         <p>
           Sebelum coding dimulai, ada beberapa keputusan yang sebaiknya dikunci agar implementasi Laravel tidak banyak refactor di tengah jalan.
         </p>
         <ol>
-          <li>Tentukan apakah satu instalasi Ignite akan melayani satu jurnal atau banyak jurnal sekaligus.</li>
-          <li>Tentukan model peer review: single blind, double blind, atau open review.</li>
-          <li>Tentukan apakah reviewer bisa diundang dari luar sistem dan membuat akun saat menerima invitation.</li>
-          <li>Tentukan apakah produksi artikel publik hanya PDF atau juga HTML galley.</li>
-          <li>Tentukan aturan deadline: berapa hari untuk desk review, review round, dan author revision.</li>
-          <li>Tentukan apakah issue harus disusun sebelum artikel accepted atau setelah artikel siap terbit.</li>
+          <li>Tentukan apakah satu instalasi Ignite akan melayani satu jurnal atau banyak jurnal sekaligus (Default: Multi-Journal).</li>
+          <li>Tentukan model peer review: single blind, double blind, atau open review (Default: Configurable per Journal).</li>
+          <li>Tentukan apakah reviewer bisa diundang dari luar sistem dan membuat akun saat menerima invitation (Default: Secure Token Invitation).</li>
+          <li>Tentukan apakah produksi artikel publik hanya PDF atau juga HTML galley (Default: Galley PDF + Web Metadata).</li>
+          <li>Tentukan aturan deadline: berapa hari untuk desk review (7 hari), review round (14 hari), dan author revision (14 hari).</li>
+          <li>Tentukan apakah issue harus disusun sebelum artikel accepted atau setelah artikel siap terbit (Default: Disusun saat naskah siap terbit).</li>
         </ol>
+
+        <h3>Matriks Manajemen Risiko &amp; Mitigasi</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Isu &amp; Potensi Risiko</th>
+                <th>Tingkat Risiko</th>
+                <th>Rencana Mitigasi Teknis</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>Kebocoran identitas penulis saat Double-Blind Review</td>
+                <td>Tinggi</td>
+                <td>Penyimpanan file terpisah: sistem membedakan <code>original_manuscript</code> dan <code>anonymized_manuscript</code> yang disanitasi dari metadata nama/afiliasi.</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>Keterlambatan respons reviewer menghambat SLA jurnal</td>
+                <td>Sedang</td>
+                <td>Otomasi cron scheduler yang mengirim email pengingat H-3 dan opsi re-assign reviewer pengganti oleh editor.</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>Ketidakvalidan berkas XML Crossref saat deposit DOI</td>
+                <td>Sedang</td>
+                <td>Validasi skema XML Crossref v5.3.1 sebelum berkas diunduh atau dikirim via API.</td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>Akses tidak sah terhadap draft naskah sebelum terbit</td>
+                <td>Tinggi</td>
+                <td>Isolasi direktori berkas non-publik di disk <code>private</code> dengan otentikasi via Laravel controller policy, bukan symlink storage publik.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
         <div class="callout">
           <div class="callout-title">Rekomendasi praktis</div>
-          <p>Mulailah dari multi-role single application dengan state machine eksplisit, audit log penuh, dan dashboard editorial sederhana. Itu sudah cukup kuat untuk menjadi fondasi Ignite versi pertama tanpa membuat kompleksitas infrastruktur terlalu cepat membesar.</p>
+          <p>Mulailah dari multi-role single application dengan state machine eksplisit, audit log penuh, dan dashboard editorial terstruktur. Itu sudah sangat kokoh untuk menjadi fondasi Ignite versi pertama tanpa membuat kompleksitas infrastruktur terlalu cepat membesar.</p>
         </div>
       </section>
     </main>

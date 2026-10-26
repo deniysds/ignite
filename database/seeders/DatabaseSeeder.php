@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Database\Seeders\EditorialRolesAndPermissionsSeeder;
+use Database\Seeders\IgniteUserAndRoleSeeder;
 use Modules\Issues\Database\Seeders\IssuesDatabaseSeeder;
 use Modules\Journals\Database\Seeders\JournalsDatabaseSeeder;
 use Modules\Logs\Database\Seeders\LogsDatabaseSeeder;
@@ -28,6 +29,7 @@ class DatabaseSeeder extends Seeder
             JournalsDatabaseSeeder::class,
             IssuesDatabaseSeeder::class,
             WebsiteDatabaseSeeder::class,
+            IgniteUserAndRoleSeeder::class,
         ]);
     }
 }
