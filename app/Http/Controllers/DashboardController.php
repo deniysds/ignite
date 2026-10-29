@@ -9,6 +9,7 @@ use Modules\Issues\Models\Issue;
 use Modules\Journals\Models\Journal;
 use Modules\Submissions\Models\ReviewerAssignment;
 use Modules\Submissions\Models\Submission;
+use Modules\Usermanagement\Models\User;
 
 class DashboardController extends Controller
 {
@@ -23,30 +24,55 @@ class DashboardController extends Controller
         }
 
         // Determine user roles & capabilities
-        $isEditorOrAdmin = $user->hasRole(['administrator', 'journal-admin', 'editor', 'Super Admin'])
+        $isEditorOrAdmin = $user->hasRole([
+            'administrator',
+            'admin',
+            'journal-admin',
+            'journal-manager',
+            'editor',
+            'editor-in-chief',
+            'section-editor',
+            'production-admin',
+            'deputy-director',
+            'executive-officer',
+            'Super Admin',
+            'staff',
+        ])
             || $user->can('submissions.decide')
-            || $user->can('submissions.read');
+            || $user->can('submissions.read')
+            || $user->can('journals.read');
 
         $isReviewer = $user->hasRole('reviewer')
             || $user->can('submissions.review')
             || ReviewerAssignment::where('reviewer_id', $user->id)->exists();
+
+        // 0. Global Platform & Publication Ecosystem Metrics
+        $overviewMetrics = [
+            'total_journals'          => Journal::where('is_active', true)->count(),
+            'total_issues'            => Issue::count(),
+            'published_articles'      => Article::count(),
+            'total_submissions'       => Submission::where('status', '!=', 'draft')->count(),
+            'total_users'             => User::count(),
+            'total_article_views'     => (int) Article::sum('views_count'),
+            'total_article_downloads' => (int) Article::sum('downloads_count'),
+        ];
 
         // 1. Editorial Metrics (Admin & Editor)
         $editorialMetrics = [];
         $actionNeededSubmissions = collect();
         if ($isEditorOrAdmin) {
             $editorialMetrics = [
-                'total_submissions'       => Submission::where('status', '!=', 'draft')->count(),
+                'total_submissions'       => $overviewMetrics['total_submissions'],
                 'need_assignment'         => Submission::whereIn('status', ['submitted', 'under_editor_review'])->count(),
                 'in_peer_review'          => Submission::where('status', 'under_review')->count(),
                 'revision_pending'        => Submission::where('status', 'revision_required')->count(),
                 'revision_received'       => Submission::where('status', 'resubmitted')->count(),
                 'ready_to_publish'        => Submission::where('status', 'accepted')->count(),
-                'published_articles'      => Article::count(),
-                'total_journals'          => Journal::where('is_active', true)->count(),
-                'total_issues'            => Issue::count(),
-                'total_article_views'     => Article::sum('views_count'),
-                'total_article_downloads' => Article::sum('downloads_count'),
+                'published_articles'      => $overviewMetrics['published_articles'],
+                'total_journals'          => $overviewMetrics['total_journals'],
+                'total_issues'            => $overviewMetrics['total_issues'],
+                'total_article_views'     => $overviewMetrics['total_article_views'],
+                'total_article_downloads' => $overviewMetrics['total_article_downloads'],
             ];
 
             $actionNeededSubmissions = Submission::with(['journal', 'authors', 'editor'])
@@ -99,6 +125,7 @@ class DashboardController extends Controller
             'user',
             'isEditorOrAdmin',
             'isReviewer',
+            'overviewMetrics',
             'editorialMetrics',
             'actionNeededSubmissions',
             'reviewerMetrics',

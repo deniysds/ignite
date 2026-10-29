@@ -10,18 +10,18 @@
             <div class="flex gap-2 items-center">
                 <img alt="" class="rounded-full border-2 border-green-500 size-9 shrink-0"
                     src="{{ asset('assets/media/avatars/300-2.png') }}" />
-                <div class="flex flex-col gap-1.5">
-                    <span class="text-sm font-semibold leading-none text-foreground">
-                        Daeng Deni Mardaeni
+                <div class="flex flex-col gap-1.5 max-w-[150px]">
+                    <span class="text-sm font-semibold leading-none text-foreground truncate">
+                        {{ auth()->user()->name ?? 'Pengguna' }}
                     </span>
-                    <a class="text-xs font-medium leading-none hover:text-primary text-secondary-foreground"
-                        href="#">
-                        ddeni05@gmail.com
+                    <a class="text-xs font-medium leading-none hover:text-primary text-secondary-foreground truncate"
+                        href="{{ route('users.profile') }}">
+                        {{ auth()->user()->email ?? '' }}
                     </a>
                 </div>
             </div>
-            <span class="kt-badge kt-badge-sm kt-badge-primary kt-badge-outline">
-                Pro
+            <span class="kt-badge kt-badge-sm kt-badge-primary kt-badge-outline capitalize">
+                {{ auth()->user()?->roles?->pluck('name')->first() ?? 'Member' }}
             </span>
         </div>
         <ul class="kt-dropdown-menu-sub">
@@ -30,17 +30,17 @@
                 </div>
             </li>
             <li>
-                <a class="kt-dropdown-menu-link" href="#">
-                    <i class="ki-filled ki-badge">
+                <a class="kt-dropdown-menu-link" href="{{ route('dashboard') }}">
+                    <i class="ki-filled ki-element-11">
                     </i>
-                    Public Profile
+                    Dashboard
                 </a>
             </li>
             <li>
-                <a class="kt-dropdown-menu-link" href="#">
+                <a class="kt-dropdown-menu-link" href="{{ route('users.profile') }}">
                     <i class="ki-filled ki-profile-circle">
                     </i>
-                    My Profile
+                    Profil Saya
                 </a>
             </li>
             <li data-kt-dropdown="true" data-kt-dropdown-placement="right-start" data-kt-dropdown-trigger="hover">

@@ -187,4 +187,40 @@ class DashboardControllerTest extends TestCase
         $response->assertSee('Kelola Naskah Masuk');
         $response->assertSee('Publikasi Ilmiah Terkini');
     }
+
+    #[Test]
+    public function dashboard_displays_platform_overview_statistics_for_all_users(): void
+    {
+        $response = $this->actingAs($this->author)->get(route('dashboard'));
+
+        $response->assertStatus(200);
+        $response->assertSee('Statistik Ekosistem Publikasi IGNITE');
+        $response->assertSee('Jurnal Aktif');
+        $response->assertSee('Nomor Terbitan');
+        $response->assertSee('Artikel Terbit');
+        $response->assertSee('Naskah Masuk');
+        $response->assertSee('Tayangan Pembaca');
+        $response->assertSee('Unduhan PDF');
+    }
+
+    #[Test]
+    public function sidebar_menu_renders_dashboard_link(): void
+    {
+        $response = $this->actingAs($this->author)->get(route('dashboard'));
+
+        $response->assertStatus(200);
+        $response->assertSee(route('dashboard'));
+        $response->assertSee('Dashboard');
+    }
+
+    #[Test]
+    public function login_redirects_to_dashboard_instead_of_home(): void
+    {
+        $response = $this->post('/login', [
+            'login' => $this->author->email,
+            'password' => 'password',
+        ]);
+
+        $response->assertRedirect(route('dashboard'));
+    }
 }

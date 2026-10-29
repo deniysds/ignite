@@ -11,8 +11,15 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        $middleware->redirectTo(
+            guests: '/login',
+            users: '/dashboard',
+        );
         $middleware->web(append: [
             \App\Http\Middleware\SetLocale::class,
+            \Modules\Usermanagement\Http\Middleware\EnforceSessionInactivityTimeout::class,
+            \Modules\Usermanagement\Http\Middleware\EnsurePasswordNotExpired::class,
+            \Modules\Usermanagement\Http\Middleware\EnforceLogonSchedule::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

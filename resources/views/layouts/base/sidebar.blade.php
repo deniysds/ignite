@@ -3,7 +3,7 @@
     data-kt-drawer="true" data-kt-drawer-class="top-0 bottom-0 kt-drawer kt-drawer-start" id="sidebar">
     <div class="hidden relative justify-between items-center px-3 kt-sidebar-header shrink-0 lg:flex lg:px-6"
         id="sidebar_header">
-        <a href="#">
+        <a href="{{ route('dashboard') }}">
             <img class="max-w-none default-logo min-h-5.5 h-[53.55px]" src="{{ env('APP_LOGO') }}"/>
             <img class="max-w-none h-5.5 small-logo" src="{{ env('APP_LOGO_MINI') }}"/>
         </a>

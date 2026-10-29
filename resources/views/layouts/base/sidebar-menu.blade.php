@@ -17,7 +17,7 @@
     ];
 
     $currentRouteName = request()->route()?->getName();
-    $isHomeActive = url()->current() === url('/');
+    $isDashboardActive = request()->routeIs('dashboard') || request()->routeIs('dashboard.*');
 
     $formatMenuTitle = function (?string $title): string {
         $title = trim((string) $title);
@@ -55,16 +55,16 @@
 @endphp
 
 {{-- Merender menu dashboard dan seluruh menu dinamis berdasarkan role user aktif. --}}
-<div class="kt-menu-item {{ $isHomeActive ? 'active' : '' }}">
+<div class="kt-menu-item {{ $isDashboardActive ? 'active' : '' }}">
     <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[10px] border border-transparent py-[6px] pe-[10px] ps-[10px] hover:rounded-lg"
-        href="{{ url('/') }}">
+        href="{{ route('dashboard') }}">
         <span
             class="kt-menu-icon w-[20px] items-start text-muted-foreground kt-menu-item-active:text-primary kt-menu-link-hover:!text-primary">
             <i class="text-lg ki-filled ki-element-11"></i>
         </span>
         <span
             class="kt-menu-title kt-menu-item-active:text-primary kt-menu-link-hover:!text-primary text-sm font-medium text-foreground">
-            Dashboards
+            Dashboard
         </span>
     </a>
 </div>

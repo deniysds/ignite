@@ -137,3 +137,13 @@
 [x-cloak] {
   display: none !important;
 }
+
+/* Security Print Masking: Password cannot be printed (Point 2) */
+@media print {
+  input[type="password"],
+  [data-kt-toggle-password="true"],
+  .sensitive-password-field,
+  .print-hidden {
+    display: none !important;
+  }
+}

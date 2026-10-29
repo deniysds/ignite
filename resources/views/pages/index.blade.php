@@ -2,9 +2,11 @@
 
 @section('breadcrumbs')
     <div class="flex items-center gap-2 text-xs text-gray-500 mb-4">
-        <span>Beranda</span>
+        <a href="{{ route('dashboard') }}" class="hover:text-red-600 font-semibold text-gray-700 flex items-center gap-1">
+            <i class="ki-filled ki-element-11 text-xs text-red-600"></i> Dashboard
+        </a>
         <span>/</span>
-        <span class="font-semibold text-gray-800">Dasbor Eksekutif Editorial</span>
+        <span class="text-gray-500">Dasbor Eksekutif &amp; Statistik Editorial</span>
     </div>
 @endsection
 
@@ -48,6 +50,80 @@
                     <a href="{{ route('website.home') }}" target="_blank" class="kt-btn kt-btn-outline bg-white/10 hover:bg-white/20 text-white border-white/20 text-xs px-4 py-2.5 flex items-center gap-2">
                         <i class="ki-filled ki-eye text-white"></i> Portal Publik Jurnal &rarr;
                     </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section Statistik Ekosistem Publikasi Ilmiah -->
+        <div class="space-y-3">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h2 class="text-sm font-bold text-gray-900 flex items-center gap-2">
+                        <i class="ki-filled ki-chart-simple text-red-600"></i> Statistik Ekosistem Publikasi IGNITE
+                    </h2>
+                    <p class="text-[11px] text-gray-500">Ringkasan statistik agregat portal jurnal, nomor terbitan, naskah ilmiah, dan pembaca.</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+                <div class="kt-card p-4 border border-gray-200 bg-white hover:border-red-300 transition shadow-xs flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-red-50 text-red-600 flex items-center justify-center font-bold text-base shrink-0">
+                        <i class="ki-filled ki-award"></i>
+                    </div>
+                    <div class="min-w-0">
+                        <div class="text-xl font-black text-gray-900">{{ $overviewMetrics['total_journals'] ?? 0 }}</div>
+                        <div class="text-[10px] font-bold text-gray-500 uppercase tracking-wider truncate">Jurnal Aktif</div>
+                    </div>
+                </div>
+
+                <div class="kt-card p-4 border border-gray-200 bg-white hover:border-blue-300 transition shadow-xs flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-base shrink-0">
+                        <i class="ki-filled ki-book-open"></i>
+                    </div>
+                    <div class="min-w-0">
+                        <div class="text-xl font-black text-gray-900">{{ $overviewMetrics['total_issues'] ?? 0 }}</div>
+                        <div class="text-[10px] font-bold text-gray-500 uppercase tracking-wider truncate">Nomor Terbitan</div>
+                    </div>
+                </div>
+
+                <div class="kt-card p-4 border border-gray-200 bg-white hover:border-emerald-300 transition shadow-xs flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-base shrink-0">
+                        <i class="ki-filled ki-crown"></i>
+                    </div>
+                    <div class="min-w-0">
+                        <div class="text-xl font-black text-emerald-800">{{ $overviewMetrics['published_articles'] ?? 0 }}</div>
+                        <div class="text-[10px] font-bold text-gray-500 uppercase tracking-wider truncate">Artikel Terbit</div>
+                    </div>
+                </div>
+
+                <div class="kt-card p-4 border border-gray-200 bg-white hover:border-indigo-300 transition shadow-xs flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold text-base shrink-0">
+                        <i class="ki-filled ki-document"></i>
+                    </div>
+                    <div class="min-w-0">
+                        <div class="text-xl font-black text-indigo-900">{{ $overviewMetrics['total_submissions'] ?? 0 }}</div>
+                        <div class="text-[10px] font-bold text-gray-500 uppercase tracking-wider truncate">Naskah Masuk</div>
+                    </div>
+                </div>
+
+                <div class="kt-card p-4 border border-gray-200 bg-white hover:border-purple-300 transition shadow-xs flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center font-bold text-base shrink-0">
+                        <i class="ki-filled ki-eye"></i>
+                    </div>
+                    <div class="min-w-0">
+                        <div class="text-xl font-black text-purple-900">{{ number_format($overviewMetrics['total_article_views'] ?? 0) }}</div>
+                        <div class="text-[10px] font-bold text-gray-500 uppercase tracking-wider truncate">Tayangan Pembaca</div>
+                    </div>
+                </div>
+
+                <div class="kt-card p-4 border border-gray-200 bg-white hover:border-teal-300 transition shadow-xs flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center font-bold text-base shrink-0">
+                        <i class="ki-filled ki-file-down"></i>
+                    </div>
+                    <div class="min-w-0">
+                        <div class="text-xl font-black text-teal-900">{{ number_format($overviewMetrics['total_article_downloads'] ?? 0) }}</div>
+                        <div class="text-[10px] font-bold text-gray-500 uppercase tracking-wider truncate">Unduhan PDF</div>
+                    </div>
                 </div>
             </div>
         </div>
